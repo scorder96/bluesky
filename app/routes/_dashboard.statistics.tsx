@@ -1,5 +1,12 @@
-import { useParams, useRouteError } from "@remix-run/react";
-import { Flame, Heart, MessageSquare, Quote, Repeat, StickyNote } from "lucide-react";
+import { Link, useParams, useRouteError } from "@remix-run/react";
+import {
+  Flame,
+  Heart,
+  MessageSquare,
+  Quote,
+  Repeat,
+  StickyNote,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
 import ContributionTracker from "~/components/ConsistencyTracker";
@@ -13,7 +20,8 @@ export function ErrorBoundary() {
     <div className="col-span-5 flex flex-col justify-center items-center">
       <h2>Cannot fetch data | Rate limit exceeded</h2>
       <p className="text-sm mt-4">
-        Please come back in an hour, or connect to a different network and refresh.
+        Please come back in an hour, or connect to a different network and
+        refresh.
       </p>
     </div>
   );
@@ -155,10 +163,29 @@ export default function Statistics() {
       <div className="h-60 md:w-1/2">
         <div className="mb-2 font-bold flex justify-between items-center mt-8">
           <h1>Growth</h1>
-          <Combobox list={properties} placeholder="select" onSelected={generateChart} />
+          <Combobox
+            list={properties}
+            placeholder="select"
+            onSelected={generateChart}
+          />
         </div>
         <LineChartComponent chartData={chartData} />
       </div>
+      {chartData.length <= 1 &&
+        (pb.authStore.isValid ? (
+          <p className="pt-4">
+            You don't see much growth data since we haven't been tracking. We
+            will start tracking this profile from now.
+          </p>
+        ) : (
+          <p className="pt-4">
+            You don't see much growth data since we haven't been tracking.{" "}
+            <Link to={"/sign-up"} className="font-bold text-blue-500">
+              Sign up
+            </Link>{" "}
+            to start tracking growth data.
+          </p>
+        ))}
       {/* Consistency
         <div className="grid grid-cols-12">
           <ul className="grid grid-rows-8">
