@@ -1,17 +1,8 @@
 import { AtpAgent } from "@atproto/api";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import {
-  Link,
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "@remix-run/react";
-import { Calendar, ChartLine, StickyNote, User, UserCircle } from "lucide-react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
+import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
-import { sidebar } from "~/data/sidebar";
-import useGlobalState from "~/hooks/useGlobalState";
 import pb from "~/pocketbase";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -49,7 +40,16 @@ export async function loader({ params }: LoaderFunctionArgs) {
     }
   }
   const feedData = postData.feed;
-  return { profileData, feedData, posts, tReplies, tReposts, tQuotes, tLikes, dateArray };
+  return {
+    profileData,
+    feedData,
+    posts,
+    tReplies,
+    tReposts,
+    tQuotes,
+    tLikes,
+    dateArray,
+  };
 }
 
 export default function Root() {
@@ -135,30 +135,40 @@ export default function Root() {
       filter: `created >= "${formattedDate}" && profile = "${profileID}"`,
     });
     // IF WAS ALREADY TRACKED
-    if (recordd) {
-      const today = new Date();
-      const todayDate = today.getDate();
-      for (let i = 0; i < recordd.items.length; i++) {
-        const recordDate = recordd.items[i].created;
-        const date = new Date(recordDate);
-        const finalDate = date.getDate();
+    if (recordd.totalItems >= 1) {
+      // const today = new Date();
+      // const todayDate = today.getDate();
+      // for (let i = 0; i < recordd.items.length; i++) {
+      // const recordDate = recordd.items[i].created;
+      // const date = new Date(recordDate);
+      // const finalDate = date.getDate();
 
-        if (finalDate == todayDate) {
-          const recordTracker = await pb
-            .collection("tracker")
-            .update(recordd.items[i].id, pbTrackerData)
-            .catch(() => {});
-        } else {
-          const recordTracker = await pb
-            .collection("tracker")
-            .create(pbTrackerData)
-            .catch(() => {});
-        }
-      }
+      // if (finalDate == todayDate) {
+      console.log(recordd);
+
+      const recordTracker = await pb
+        .collection("tracker")
+        .update(recordd.items[0].id, pbTrackerData)
+        .catch(() => {});
+      // } else {
+      //   const recordTracker = await pb
+      //     .collection("tracker")
+      //     .create(pbTrackerData)
+      //     .catch(() => {});
+      // }
+      // }
+    } else {
+      const recordTracker = await pb
+        .collection("tracker")
+        .create(pbTrackerData)
+        .catch(() => {});
     }
     navigate("/profile");
   }
   return (
-    <div className="h-screen flex justify-center items-center">Fetching your data...</div>
+    <div className="h-screen flex flex-col justify-center items-center">
+      <p>Fetching your data</p>
+      <Loader2 className="animate-spin mt-4" color="#3b82f6" />
+    </div>
   );
 }
