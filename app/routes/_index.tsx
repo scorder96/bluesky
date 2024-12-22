@@ -1,6 +1,12 @@
 import { AtpAgent } from "@atproto/api";
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Form, Link, redirect, useActionData, useNavigation } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  redirect,
+  useActionData,
+  useNavigation,
+} from "@remix-run/react";
 import { Loader, Loader2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -12,6 +18,52 @@ export const meta: MetaFunction = () => {
       name: "description",
       content:
         "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+    },
+    {
+      name: "og:url",
+      content: "https://sleekdash.xyz",
+    },
+    {
+      name: "og:type",
+      content: "website",
+    },
+    {
+      name: "og:title",
+      content: "Bsky SleekDash | Bluesky Profile Analytics",
+    },
+    {
+      name: "og:description",
+      content:
+        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+    },
+    {
+      name: "og:image",
+      content: "/sleekdash-rectangle.png",
+    },
+    {
+      name: "twitter:card",
+      content: "summary_large_image",
+    },
+    {
+      name: "twitter:domain",
+      content: "sleekdash.xyz",
+    },
+    {
+      name: "twitter:url",
+      content: "https://sleekdash.xyz",
+    },
+    {
+      name: "twitter:title",
+      content: "Bsky SleekDash | Bluesky Profile Analytics",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+    },
+    {
+      name: "twitter:image",
+      content: "/sleekdash-rectangle.png",
     },
   ];
 };
@@ -67,9 +119,12 @@ export default function Index() {
               name="identifier"
             />
           </div>
-          {data == false && <div className="mt-4 text-red-500">Handle not found :(</div>}
+          {data == false && (
+            <div className="mt-4 text-red-500">Handle not found :(</div>
+          )}
           <Button className="mt-4">
-            {navigation.state == "submitting" || navigation.state == "loading" ? (
+            {navigation.state == "submitting" ||
+            navigation.state == "loading" ? (
               <Loader2 className="animate-spin" />
             ) : (
               "Continue"
