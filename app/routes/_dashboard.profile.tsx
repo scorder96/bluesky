@@ -1,6 +1,11 @@
 import { AtpAgent } from "@atproto/api";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { redirect, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
+import {
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useRouteError,
+} from "@remix-run/react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
 import {
@@ -48,7 +53,8 @@ export function ErrorBoundary() {
     <div className="col-span-5 flex flex-col justify-center items-center">
       <h2>Cannot fetch data | Rate limit exceeded</h2>
       <p className="text-sm mt-4">
-        Please come back in an hour, or connect to a different network and refresh.
+        Please come back in an hour, or connect to a different network and
+        refresh.
       </p>
     </div>
   );
@@ -79,7 +85,7 @@ export default function Profile() {
           {state?.profileData.banner ? (
             <img src={state?.profileData.banner} alt="user banner" />
           ) : (
-            "Banner not found"
+            <span className="text-red-500">Banner not found</span>
           )}
           {state?.profileData.avatar ? (
             <img
@@ -90,7 +96,7 @@ export default function Profile() {
               className="rounded-full"
             />
           ) : (
-            "Avatar not found"
+            <span className="text-red-500">Avatar not found</span>
           )}
           <CardTitle>{state?.profileData.displayName}</CardTitle>
           <CardDescription>@{state?.profileData.handle}</CardDescription>
@@ -105,10 +111,13 @@ export default function Profile() {
             <span className="opacity-50">following</span>
           </h3>
           <h3>
-            {state?.profileData.postsCount} <span className="opacity-50">posts</span>
+            {state?.profileData.postsCount}{" "}
+            <span className="opacity-50">posts</span>
           </h3>
         </CardContent>
-        <CardFooter className="text-sm">{state?.profileData.description}</CardFooter>
+        <CardFooter className="text-sm">
+          {state?.profileData.description}
+        </CardFooter>
       </Card>
       <Combobox
         list={["+ Add profile"]}
