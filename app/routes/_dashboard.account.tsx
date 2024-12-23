@@ -7,7 +7,7 @@ import pb from "~/pocketbase";
 
 export default function Account() {
   useEffect(() => {
-    !pb.authStore.isValid && navigate("/");
+    !pb.authStore.isValid && navigate("/sign-in");
   }, []);
   const navigate = useNavigate();
   return (

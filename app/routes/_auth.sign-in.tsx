@@ -27,7 +27,7 @@ export default function SignIn() {
         .collection("profiles")
         .getFirstListItem(`user.id="${pb.authStore.record?.id}"`);
       if (record) {
-        navigate("/dashboard/profile/" + record.did);
+        navigate("/profile/");
       } else {
         navigate("/");
       }
