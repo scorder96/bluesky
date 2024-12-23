@@ -1,7 +1,23 @@
-import { Link, Outlet, useLocation, useNavigate, useParams } from "@remix-run/react";
-import { Calendar, ChartLine, StickyNote, User, UserCircle } from "lucide-react";
+import { MetaFunction } from "@remix-run/node";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "@remix-run/react";
+import {
+  Calendar,
+  ChartLine,
+  StickyNote,
+  User,
+  UserCircle,
+} from "lucide-react";
 import { sidebar } from "~/data/sidebar";
 
+export const meta: MetaFunction = () => {
+  return [{ title: "Bsky SleekDash | Dashboard" }];
+};
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
