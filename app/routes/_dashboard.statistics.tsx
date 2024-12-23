@@ -62,7 +62,7 @@ export default function Statistics() {
   async function generateChart(value: String) {
     const tempchartData = [];
     const resultList = await pb.collection("tracker").getList(1, 7, {
-      filter: `did="${state?.profileData.did}"`,
+      filter: `handle="${state?.profileData.handle}"`,
       sort: "created",
     });
 
@@ -171,7 +171,10 @@ export default function Statistics() {
         </div>
         <LineChartComponent chartData={chartData} />
       </div>
-      {chartData.length <= 1 &&
+      {chartData.length == 0 && (
+        <p className="pt-4">Select a property to see data 👆</p>
+      )}
+      {chartData.length == 1 &&
         (pb.authStore.isValid ? (
           <p className="pt-4">
             You don't see much growth data since we haven't been tracking. We
