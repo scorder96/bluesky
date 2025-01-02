@@ -107,7 +107,7 @@ export default function Statistics() {
     setChartData(tempchartData);
   }
   return (
-    <div className="col-span-6 md:col-span-5 px-6 py-8 space-y-4">
+    <div className="col-span-6 md:col-span-5 px-6 py-8 space-y-4 overflow-y-auto">
       {/* <Combobox
         list={frequency}
         placeholder="time frame"
