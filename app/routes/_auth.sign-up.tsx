@@ -61,32 +61,50 @@ export default function SignUp() {
     }
     setLoading(false);
   }
+  async function googleAuth() {
+    const authData = await pb
+      .collection("users")
+      .authWithOAuth2({ provider: "google" })
+      .catch((err) => console.log(err));
+  }
   return (
-    <form onSubmit={signUp} className="w-96">
-      <h1 className="text-2xl">Create a new account</h1>
-      <div className="mt-4">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={Email}
+    <div>
+      <form onSubmit={signUp} className="w-96">
+        <h1 className="text-2xl font-bold">Create a new account</h1>
+        <div className="mt-4">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={Email}
+          />
+        </div>
+        <div className="mt-4">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={Password}
+          />
+        </div>
+        {Error && <p className="mt-4 text-red-500">{Error}</p>}
+        <Button variant={"secondary"} className="w-full mt-4" onClick={signUp}>
+          {Loading ? <Loader2 className="animate-spin" /> : "Continue"}
+        </Button>
+      </form>
+      <p className="my-4 text-center opacity-50">or</p>
+      <Button className="w-full" onClick={googleAuth}>
+        <img
+          src="/Google__G__logo.svg"
+          alt="Google G logo"
+          height={16}
+          width={16}
         />
-      </div>
-      <div className="mt-4">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={Password}
-        />
-      </div>
-      {Error && <p className="mt-4 text-red-500">{Error}</p>}
-      <Button className="w-full mt-8">
-        {Loading ? <Loader2 className="animate-spin" /> : "Continue"}
+        Google Auth
       </Button>
       <p className="mt-4 text-sm text-center">
         Already have an account?{" "}
@@ -94,6 +112,6 @@ export default function SignUp() {
           Sign In
         </Link>
       </p>
-    </form>
+    </div>
   );
 }

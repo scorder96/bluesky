@@ -23,51 +23,63 @@ export default function SignIn() {
       .authWithPassword(Email, Password)
       .catch((err) => setError(err.message));
     if (pb.authStore.isValid) {
-      const record = await pb
-        .collection("profiles")
-        .getFirstListItem(`user.id="${pb.authStore.record?.id}"`);
-      if (record) {
-        navigate("/profile/");
-      } else {
-        navigate("/");
-      }
+      navigate("/profile");
     }
     setLoading(false);
   }
+  async function googleAuth() {
+    const authData = await pb
+      .collection("users")
+      .authWithOAuth2({ provider: "google" })
+      .catch((err) => console.log(err));
+  }
 
   return (
-    <form onSubmit={signIn} className="w-96">
-      <h1 className="text-2xl">Log in to your account</h1>
-      <div className="mt-4">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          type="email"
-          id="email"
-          name="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={Email}
-        ></Input>
-      </div>
-      <div className="mt-4">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={Password}
-        ></Input>
-      </div>
-      {Error && <p className="mt-4 text-red-500">{Error}</p>}
-      <Button className="w-full mt-8">
-        {Loading ? <Loader2 className="animate-spin" /> : "Continue"}
+    <div>
+      <form onSubmit={signIn} className="w-96">
+        <h1 className="text-2xl font-bold">Log in to your account</h1>
+        <div className="mt-4">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={Email}
+          ></Input>
+        </div>
+        <div className="mt-4">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={Password}
+          ></Input>
+        </div>
+        {Error && <p className="mt-4 text-red-500">{Error}</p>}
+        <Button variant={"secondary"} className="w-full mt-4">
+          {Loading ? <Loader2 className="animate-spin" /> : "Continue"}
+        </Button>
+      </form>
+      <p className="my-4 text-center opacity-50">or</p>
+      <Button className="w-full" onClick={googleAuth}>
+        <img
+          src="/Google__G__logo.svg"
+          alt="Google G logo"
+          height={16}
+          width={16}
+        />
+        Google Auth
       </Button>
+
       <p className="mt-4 text-sm text-center">
         Don&apos;t have an account?{" "}
         <Link to={"/sign-up"} className="text-blue-500 font-bold underline">
           Sign Up
         </Link>
       </p>
-    </form>
+    </div>
   );
 }
