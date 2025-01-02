@@ -106,6 +106,7 @@ export default function Root() {
     }
     pbTrackerData = {
       profile: profileID,
+      handle: data.profileData.handle,
       followers: data.profileData.followersCount,
       posts: data.profileData.postsCount,
       replies: data.tReplies,
