@@ -35,7 +35,11 @@ export async function loader({ params }: LoaderFunctionArgs) {
     // @ts-ignore
     const timestamp = postData.feed[i].post.record.createdAt;
     const date = new Date(timestamp);
-    if (date.getFullYear() == 2024 && date.getMonth() == 11) {
+    const todaydate = new Date();
+    if (
+      date.getFullYear() == todaydate.getFullYear() &&
+      date.getMonth() == todaydate.getMonth()
+    ) {
       dateArray[i] = date.getDate();
     }
   }
