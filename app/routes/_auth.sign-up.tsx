@@ -1,5 +1,5 @@
 import { Link, useNavigate, useNavigation } from "@remix-run/react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -65,7 +65,10 @@ export default function SignUp() {
     const authData = await pb
       .collection("users")
       .authWithOAuth2({ provider: "google" })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
+    if (pb.authStore.isValid) {
+      navigate("/");
+    }
   }
   return (
     <div>

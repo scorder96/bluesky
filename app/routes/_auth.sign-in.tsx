@@ -32,8 +32,10 @@ export default function SignIn() {
       .collection("users")
       .authWithOAuth2({ provider: "google" })
       .catch((err) => console.log(err));
+    if (pb.authStore.isValid) {
+      navigate("/");
+    }
   }
-
   return (
     <div>
       <form onSubmit={signIn} className="w-96">
