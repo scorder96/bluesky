@@ -26,7 +26,7 @@
     "cmdk": "^1.0.0",
     "isbot": "^4.1.0",
     "lucide-react": "^0.468.0",
-    "pocketbase": "^0.23.0",
+    "pocketbase": "^0.25.0",
     "recharts": "^2.15.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
