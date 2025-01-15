@@ -4,11 +4,13 @@ import {
   Outlet,
   useLocation,
   useNavigate,
+  useNavigation,
   useParams,
 } from "@remix-run/react";
 import {
   Calendar,
   ChartLine,
+  Loader2,
   StickyNote,
   User,
   UserCircle,
@@ -21,6 +23,7 @@ export const meta: MetaFunction = () => {
 export default function Dashboard() {
   const location = useLocation();
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const params = useParams();
   return (
     <div className="h-screen grid grid-cols-6">
@@ -65,7 +68,13 @@ export default function Dashboard() {
           <UserCircle size={16} className="me-2" /> Account
         </div>
       </aside>
-      <Outlet />
+      {navigation.state == "loading" ? (
+        <div className="col-span-6 md:col-span-5 flex justify-center items-center">
+          <Loader2 className="animate-spin text-blue-500" />
+        </div>
+      ) : (
+        <Outlet />
+      )}
       <nav className="absolute bottom-0 border-t w-full flex md:hidden">
         {sidebar.map((option, index) => {
           const active = location.pathname.includes(option.route);
