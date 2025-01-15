@@ -1,23 +1,30 @@
-import { calendar, days } from "~/data/time";
+import { buildCalendar, days } from "~/data/time";
 
 interface Props {
   dateArray: Array<Number>;
 }
 
 export default function ConsistencyTracker({ dateArray }: Props) {
-  const date = new Date();
+  let date = new Date();
   const today = date.getDate();
 
-  function gridStyler(day: number) {
+  const dateList = buildCalendar().dateList;
+  const thismonthList = buildCalendar().thismonthList;
+
+  function gridStyler(day: number, index: number) {
     var classString = "";
-    if (today == day + 1) {
-      classString = "bg-neutral-200 w-full h-8 border-2 border-blue-500";
-    } else if (dateArray?.includes(day + 1)) {
-      classString = "w-full h-8 bg-green-300";
-    } else if (today == day + 1 && dateArray?.includes(day + 1)) {
+    if (!thismonthList[index]) {
+      classString = "bg-white w-full h-8";
+      return classString;
+    }
+    if (today == day) {
+      classString = "border w-full h-8 border-2 border-blue-500";
+    } else if (dateArray?.includes(day)) {
+      classString = "border w-full h-8 bg-blue-200";
+    } else if (today == day && dateArray?.includes(day)) {
       classString = "w-full h-8 border-2 border-blue-500 bg-green-300";
     } else {
-      classString = "bg-neutral-200 w-full h-8";
+      classString = "border w-full h-8";
     }
     return classString;
   }
@@ -40,8 +47,8 @@ export default function ConsistencyTracker({ dateArray }: Props) {
         })}
       </div>
       <div className="grid grid-cols-7 grid-rows-4 gap-2 mt-2">
-        {calendar[11].map((day, index) => {
-          return <div key={index} className={gridStyler(day)} />;
+        {dateList.map((day, index) => {
+          return <div key={index} className={gridStyler(day, index)} />;
         })}
       </div>
     </div>
