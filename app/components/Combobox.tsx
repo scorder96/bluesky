@@ -1,4 +1,8 @@
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
 import {
   Command,
   CommandDialog,
@@ -13,6 +17,8 @@ import {
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useNavigate } from "@remix-run/react";
+import pb from "~/pocketbase";
 
 interface Props {
   placeholder: string;
@@ -22,6 +28,7 @@ interface Props {
 export default function Combobox({ placeholder, list, onSelected }: Props) {
   const [Open, setOpen] = useState(false);
   const [Selected, setSelected] = useState(String);
+  const navigate = useNavigate();
   return (
     <Popover open={Open} onOpenChange={setOpen}>
       <PopoverTrigger asChild className="text-left">
@@ -39,6 +46,7 @@ export default function Combobox({ placeholder, list, onSelected }: Props) {
                   <CommandItem
                     key={property}
                     onSelect={(value) => {
+                      !pb.authStore.isValid && navigate("/sign-up");
                       setSelected(value);
                       onSelected(value);
                       setOpen(false);

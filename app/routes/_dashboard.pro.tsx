@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@remix-run/react";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -13,7 +13,11 @@ import {
 import pb from "~/pocketbase";
 
 export default function Pro() {
+  useEffect(() => {
+    !pb.authStore.isValid && navigate("/sign-up");
+  }, []);
   const [Loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   async function inititatePayment() {
     setLoading(true);
     const record = await pb
