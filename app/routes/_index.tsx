@@ -113,7 +113,7 @@ export default function Index() {
             Analytics
           </span>
         </h1>
-        <h2 className="text-lg mt-4">Engagement metrics and growth tracking</h2>
+        <h2 className="text-lg mt-4">Engagement metrics and Growth tracking</h2>
         <Form method="POST" className="mt-8 flex flex-col">
           <div className="flex items-center">
             <div className="h-10 w-10 flex justify-center items-center text-blue-500">
@@ -138,29 +138,25 @@ export default function Index() {
           </Button>
         </Form>
       </div>
-      <div className="flex justify-center space-x-16">
-        <div className="border-2 border-blue-500 p-4">
-          <h3 className="text-xl flex">
-            Engagement &nbsp; <ChartNoAxesColumnIncreasing />
-          </h3>
+      <div className="flex justify-center space-x-8 px-32">
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+          <h3 className="text-xl">Engagement</h3>
+          <ChartNoAxesColumnIncreasing />
         </div>
-        <div className="border-2 border-blue-500 p-4">
-          <h3 className="text-xl flex">
-            Growth &nbsp; <TrendingUp />
-          </h3>
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+          <h3 className="text-xl">Growth</h3>
+          <TrendingUp />
         </div>
-        <div className="border-2 border-blue-500 p-4">
-          <h3 className="text-xl flex">
-            Consistency &nbsp; <Flame />
-          </h3>
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+          <h3 className="text-xl">Consistency</h3>
+          <Flame />
         </div>
-        <div className="border-2 border-blue-500 p-4">
-          <h3 className="text-xl flex">
-            Scheduling &nbsp; <Calendar />
-          </h3>
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+          <h3 className="text-xl">Scheduling</h3>
+          <Calendar />
         </div>
       </div>
-      <div className="text-center mt-32">
+      <div className="text-center mt-32 py-16 bg-gradient-to-b from-blue-200 to-white">
         <h2 className="text-4xl italic">
           " This is the BEST Bluesky analytics tool ever!! "
         </h2>
