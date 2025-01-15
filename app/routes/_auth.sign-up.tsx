@@ -56,7 +56,7 @@ export default function SignUp() {
         .authWithPassword(Email, Password)
         .catch((err) => setError(err.message));
       if (pb.authStore.isValid) {
-        navigate("/");
+        navigate("/verify");
       }
     }
     setLoading(false);
