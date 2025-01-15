@@ -35,7 +35,7 @@ export default function Pro() {
         <CardHeader>
           <CardTitle>🐦 Early Bird</CardTitle>
           <CardDescription>
-            Price will be increased to approx. $39 after release.
+            Price will be increased to approx. $29 after release.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex items-end space-x-2">
