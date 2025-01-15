@@ -7,7 +7,13 @@ import {
   useActionData,
   useNavigation,
 } from "@remix-run/react";
-import { Loader2 } from "lucide-react";
+import {
+  Calendar,
+  ChartNoAxesColumnIncreasing,
+  Flame,
+  Loader2,
+  TrendingUp,
+} from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
@@ -100,7 +106,7 @@ export default function Index() {
           <h2>Account</h2>
         </Link>
       </nav>
-      <div className="flex flex-col items-center text-center pt-32">
+      <div className="flex flex-col items-center text-center h-screen pt-32">
         <h1 className="text-6xl font-bold">
           Bluesky Profile{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-blue-500 to-blue-400">
@@ -132,6 +138,46 @@ export default function Index() {
           </Button>
         </Form>
       </div>
+      <div className="flex justify-center space-x-16">
+        <div className="border-2 border-blue-500 p-4">
+          <h3 className="text-xl flex">
+            Engagement &nbsp; <ChartNoAxesColumnIncreasing />
+          </h3>
+        </div>
+        <div className="border-2 border-blue-500 p-4">
+          <h3 className="text-xl flex">
+            Growth &nbsp; <TrendingUp />
+          </h3>
+        </div>
+        <div className="border-2 border-blue-500 p-4">
+          <h3 className="text-xl flex">
+            Consistency &nbsp; <Flame />
+          </h3>
+        </div>
+        <div className="border-2 border-blue-500 p-4">
+          <h3 className="text-xl flex">
+            Scheduling &nbsp; <Calendar />
+          </h3>
+        </div>
+      </div>
+      <div className="text-center mt-32">
+        <h2 className="text-4xl italic">
+          " This is the BEST Bluesky analytics tool ever!! "
+        </h2>
+        <p className="mt-4">- Nobody</p>
+      </div>
+      <footer className="w-full p-8 grid grid-cols-3 border-t border-blue-500 mt-32">
+        <h1 className="text-2xl">SleekDash.</h1>
+        <ul>
+          <li>Home</li>
+          <li>Profile</li>
+          <li>Statistics</li>
+          <li>Posts</li>
+          <li>Schedule</li>
+          <li>Account</li>
+        </ul>
+        <p>Copyright &copy; 2025 SleekDash</p>
+      </footer>
     </>
   );
 }
