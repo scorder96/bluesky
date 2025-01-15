@@ -27,7 +27,7 @@ export default function Dashboard() {
   const params = useParams();
   return (
     <div className="h-screen grid grid-cols-6">
-      <aside className="border-r flex flex-col justify-between hidden md:block">
+      <aside className="border-r flex-col justify-between hidden md:flex">
         <ul className="mt-8">
           <Link to={"/"}>
             <h1 className="text-xl text-center mb-16">
