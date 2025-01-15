@@ -46,8 +46,6 @@ const salesData = [
 ];
 
 const LineChartComponent = ({ chartData }: Props) => {
-  console.log(chartData);
-
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart

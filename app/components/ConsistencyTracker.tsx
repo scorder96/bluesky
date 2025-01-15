@@ -1,4 +1,3 @@
-import React from "react";
 import { calendar, days } from "~/data/time";
 
 interface Props {

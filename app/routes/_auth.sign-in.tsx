@@ -1,4 +1,4 @@
-import { Link, useNavigate, useNavigation } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
 import { FormEvent, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -7,7 +7,6 @@ import { Loader2 } from "lucide-react";
 import pb from "~/pocketbase";
 
 export default function SignIn() {
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const [Email, setEmail] = useState(String);
   const [Password, setPassword] = useState(String);

@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
 import { Check } from "lucide-react";
-import React from "react";
 
 export default function Confirmation() {
   return (

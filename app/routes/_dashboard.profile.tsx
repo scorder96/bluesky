@@ -1,11 +1,4 @@
-import { AtpAgent } from "@atproto/api";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import {
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useRouteError,
-} from "@remix-run/react";
+import { useNavigate, useRouteError } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
 import {
@@ -16,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import useGlobalState from "~/hooks/useGlobalState";
-import pb from "~/pocketbase";
 
 // export async function loader({ params }: LoaderFunctionArgs) {
 //   const agent = new AtpAgent({

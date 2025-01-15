@@ -1,6 +1,5 @@
-import { Link, redirect, useLoaderData, useNavigate } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
 import { Headphones } from "lucide-react";
-import PocketBase from "pocketbase";
 import { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import pb from "~/pocketbase";

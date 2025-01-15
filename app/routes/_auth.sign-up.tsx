@@ -1,5 +1,5 @@
-import { Link, useNavigate, useNavigation } from "@remix-run/react";
-import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "@remix-run/react";
+import { FormEvent, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -29,7 +29,6 @@ import { Loader2 } from "lucide-react";
 // }
 
 export default function SignUp() {
-  const navigation = useNavigation();
   const navigate = useNavigate();
   const [Email, setEmail] = useState(String);
   const [Password, setPassword] = useState(String);

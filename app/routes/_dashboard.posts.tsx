@@ -1,11 +1,8 @@
-import { AtpAgent } from "@atproto/api";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useParams, useRouteError } from "@remix-run/react";
+import { useParams, useRouteError } from "@remix-run/react";
 import { Heart, MessageSquare, Quote, Repeat } from "lucide-react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
 import { fromto, sortby } from "~/data/combobox";
-import { object } from "~/data/sidebar";
 import useSort from "~/hooks/useSort";
 
 // export async function loader({ params }: LoaderFunctionArgs) {
@@ -29,7 +26,8 @@ export function ErrorBoundary() {
     <div className="col-span-5 flex flex-col justify-center items-center">
       <h2>Cannot fetch data | Rate limit exceeded</h2>
       <p className="text-sm mt-4">
-        Please come back in an hour, or connect to a different network and refresh.
+        Please come back in an hour, or connect to a different network and
+        refresh.
       </p>
     </div>
   );
@@ -81,8 +79,16 @@ export default function Posts() {
     <div className="col-span-6 md:col-span-5 relative overflow-x-auto">
       <div className="px-6 py-4 space-x-2">
         <span>Sort by</span>
-        <Combobox list={sortby} placeholder="interaction" onSelected={setFirstCombobox} />
-        <Combobox list={fromto} placeholder="from" onSelected={setSecondCombobox} />
+        <Combobox
+          list={sortby}
+          placeholder="interaction"
+          onSelected={setFirstCombobox}
+        />
+        <Combobox
+          list={fromto}
+          placeholder="from"
+          onSelected={setSecondCombobox}
+        />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
