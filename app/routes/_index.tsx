@@ -138,20 +138,20 @@ export default function Index() {
           </Button>
         </Form>
       </div>
-      <div className="flex justify-center space-x-8 px-32">
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+      <div className="grid md:grid-cols-4 gap-4 px-8 md:px-32">
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
           <h3 className="text-xl">Engagement</h3>
           <ChartNoAxesColumnIncreasing />
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
           <h3 className="text-xl">Growth</h3>
           <TrendingUp />
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
           <h3 className="text-xl">Consistency</h3>
           <Flame />
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4 w-1/4">
+        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
           <h3 className="text-xl">Scheduling</h3>
           <Calendar />
         </div>
@@ -163,7 +163,7 @@ export default function Index() {
         <p className="mt-4">- Nobody</p>
       </div>
       <footer className="w-full p-8 grid grid-cols-3 border-t border-blue-500 mt-32">
-        <h1 className="text-2xl">SleekDash.</h1>
+        <h1 className="md:text-2xl font-bold">SleekDash.</h1>
         <ul>
           <li>Home</li>
           <li>Profile</li>
