@@ -75,7 +75,7 @@ export default function Dashboard() {
       ) : (
         <Outlet />
       )}
-      <nav className="absolute bottom-0 bg-white border-t w-full flex md:hidden">
+      <nav className="fixed bottom-0 bg-white border-t w-full flex md:hidden">
         {sidebar.map((option, index) => {
           const active = location.pathname.includes(option.route);
           return (
