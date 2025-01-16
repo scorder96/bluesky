@@ -172,16 +172,16 @@ export default function Statistics() {
         <LineChartComponent chartData={chartData} />
       </div>
       {chartData.length == 0 && (
-        <p className="pt-4 pb-16">Select a property to see data 👆</p>
+        <p className="pt-4">Select a property to see data 👆</p>
       )}
       {chartData.length == 1 &&
         (pb.authStore.isValid ? (
-          <p className="pt-4 pb-16">
+          <p className="pt-4">
             You don't see much growth data since we haven't been tracking. We
             will start tracking this profile from now.
           </p>
         ) : (
-          <p className="pt-4 pb-16">
+          <p className="pt-4">
             You don't see much growth data since we haven't been tracking.{" "}
             <Link to={"/sign-up"} className="font-bold text-blue-500">
               Sign up
@@ -189,6 +189,7 @@ export default function Statistics() {
             to start tracking growth data.
           </p>
         ))}
+      <div className="h-16" />
       {/* Consistency
         <div className="grid grid-cols-12">
           <ul className="grid grid-rows-8">
