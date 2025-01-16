@@ -96,20 +96,20 @@ export default function Root() {
       .catch(() => {});
 
     var pbTrackerData;
-    var profileID;
-    // IF PROFILE ALREADY EXISTS
-    if (!recordProfile) {
-      const record = await pb
-        .collection("profiles")
-        .getFirstListItem(`handle="${data.profileData.handle}"`)
-        .catch(() => {});
-      profileID = record?.id;
-      // ELSE IF NEW PROFILE
-    } else {
-      profileID = recordProfile!.id;
-    }
+    // var profileID;
+    // // IF PROFILE ALREADY EXISTS
+    // if (!recordProfile) {
+    //   const record = await pb
+    //     .collection("profiles")
+    //     .getFirstListItem(`handle="${data.profileData.handle}"`)
+    //     .catch(() => {});
+    //   profileID = record?.id;
+    //   // ELSE IF NEW PROFILE
+    // } else {
+    //   profileID = recordProfile!.id;
+    // }
     pbTrackerData = {
-      profile: profileID,
+      // profile: profileID,
       handle: data.profileData.handle,
       followers: data.profileData.followersCount,
       posts: data.profileData.postsCount,
@@ -137,7 +137,7 @@ export default function Root() {
     console.log(formattedDate);
 
     const recordd = await pb.collection("tracker").getList(1, 50, {
-      filter: `created >= "${formattedDate}" && profile = "${profileID}"`,
+      filter: `created >= "${formattedDate}" && handle="${data.profileData.handle}"`,
     });
     // IF WAS ALREADY TRACKED
     if (recordd.totalItems >= 1) {
