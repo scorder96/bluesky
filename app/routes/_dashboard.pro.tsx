@@ -30,12 +30,13 @@ export default function Pro() {
   }
   return (
     <div className="col-span-6 md:col-span-5 flex flex-col justify-center items-center">
-      <h2 className="mb-8">This feature will be released VERY soon!</h2>
+      {/* <h2 className="mb-8">This feature will be released VERY soon!</h2> */}
+      <h2 className="mb-8">Oops! This is a PRO feature :(</h2>
       <Card>
         <CardHeader>
           <CardTitle>🐦 Early Bird</CardTitle>
           <CardDescription>
-            Price will be increased to approx. $29 after release.
+            Price will be increased to approx. $29 after beta ends.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex items-end space-x-2">
