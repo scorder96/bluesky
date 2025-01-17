@@ -10,10 +10,12 @@ import {
 import {
   Calendar,
   ChartNoAxesColumnIncreasing,
+  Check,
   Flame,
   Loader2,
   TrendingUp,
 } from "lucide-react";
+import Reveal from "~/components/Reveal";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
@@ -107,6 +109,15 @@ export default function Index() {
         </Link>
       </nav>
       <div className="flex flex-col items-center text-center h-screen pt-32">
+        <Link to={"https://bsky.app/profile/sleekdash.xyz"} target="_blank">
+          <button
+            type="button"
+            className="flex items-center bg-gradient-to-br from-slate-700 to-slate-800 text-white p-1 px-3 mb-4 rounded-full"
+          >
+            {/* <TwitterLogoIcon className="me-2" /> */}
+            <span className="text-sm font-semibold">Follow on Bluesky</span>
+          </button>
+        </Link>
         <h1 className="text-6xl font-bold">
           Bluesky Profile{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-blue-500 to-blue-400">
@@ -138,41 +149,91 @@ export default function Index() {
           </Button>
         </Form>
       </div>
-      <div className="grid md:grid-cols-4 gap-4 px-8 md:px-32">
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
-          <h3 className="text-xl">Engagement</h3>
-          <ChartNoAxesColumnIncreasing />
+      <Reveal>
+        <div className="grid grid-cols-2 px-32">
+          <div>
+            <h2 className="text-4xl font-bold">Statistics that matter.</h2>
+            <ul className="[&>li]:flex mt-8 space-y-4">
+              <li>
+                <Check className="text-blue-500" />
+                &nbsp;Consistency streaks
+              </li>
+              <li>
+                <Check className="text-blue-500" />
+                &nbsp;Growth over time
+              </li>
+              <li>
+                <Check className="text-blue-500" />
+                &nbsp;Deeper engagement tracking
+              </li>
+              <li>
+                <Check className="text-blue-500" />
+                &nbsp;Best performing posts
+              </li>
+            </ul>
+          </div>
+          <div>
+            <img src="/screenshot-1.png" alt="consistency graph screenshot" />
+          </div>
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
-          <h3 className="text-xl">Growth</h3>
-          <TrendingUp />
+      </Reveal>
+      <Reveal>
+        <div className="grid grid-cols-2 px-32 mt-32">
+          <div>
+            <img src="/screenshot-2.png" alt="post scheduling screenshot" />
+          </div>
+          <div className="ps-32">
+            <h2 className="text-4xl font-bold">Tools for growth.</h2>
+            <p className="mt-8">
+              Schedule upto an year worth of posts to keep up your consistency
+              and grow on auto-pilot. ✈️
+            </p>
+            <p className="mt-4">We will manage the rest.</p>
+          </div>
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
-          <h3 className="text-xl">Consistency</h3>
-          <Flame />
+      </Reveal>
+      <Reveal>
+        <div className="grid md:grid-cols-4 gap-4 px-8 md:px-32 mt-32">
+          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+            <h3 className="text-xl">Engagement</h3>
+            <ChartNoAxesColumnIncreasing />
+          </div>
+          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+            <h3 className="text-xl">Growth</h3>
+            <TrendingUp />
+          </div>
+          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+            <h3 className="text-xl">Consistency</h3>
+            <Flame />
+          </div>
+          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+            <h3 className="text-xl">Scheduling</h3>
+            <Calendar />
+          </div>
         </div>
-        <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
-          <h3 className="text-xl">Scheduling</h3>
-          <Calendar />
-        </div>
-      </div>
+      </Reveal>
       <div className="text-center mt-32 py-16 bg-gradient-to-b from-blue-200 to-white">
         <h2 className="text-4xl italic">
           " This is the BEST Bluesky analytics tool ever!! "
         </h2>
         <p className="mt-4">- Nobody</p>
       </div>
-      <footer className="w-full p-8 grid grid-cols-3 border-t border-blue-500 mt-32">
-        <h1 className="md:text-2xl font-bold">SleekDash.</h1>
-        <ul>
-          <li>Home</li>
-          <li>Profile</li>
-          <li>Statistics</li>
-          <li>Posts</li>
-          <li>Schedule</li>
-          <li>Account</li>
-        </ul>
-        <p>Copyright &copy; 2025 SleekDash</p>
+      <footer className="w-full p-8 border-t border-blue-500 mt-32">
+        <div className="grid grid-cols-3">
+          <h1 className="md:text-2xl font-bold">SleekDash.</h1>
+          <ul>
+            <li>Home</li>
+            <li>Profile</li>
+            <li>Statistics</li>
+            <li>Posts</li>
+            <li>Schedule</li>
+            <li>Account</li>
+          </ul>
+          <Link to={"https://bsky.app/profile/sleekdash.xyz"} target="_blank">
+            🦋 <u>Follow on Bluseky</u>
+          </Link>
+        </div>
+        <p className="text-center mt-8">Copyright &copy; 2025 SleekDash</p>
       </footer>
     </>
   );
