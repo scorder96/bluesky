@@ -49,12 +49,12 @@ export default function Statistics() {
   // };
 
   while (today != 0) {
-    today--;
     if (state?.dateArray.includes(today)) {
       streak++;
     } else {
       break;
     }
+    today--;
   }
 
   const [chartData, setChartData] = useState(Array<object>);

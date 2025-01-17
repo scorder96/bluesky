@@ -17,12 +17,12 @@ export default function ConsistencyTracker({ dateArray }: Props) {
       classString = "bg-white w-full h-8";
       return classString;
     }
-    if (today == day) {
+    if (today == day && dateArray?.includes(day)) {
+      classString = "w-full h-8 border-2 border-blue-500 bg-blue-200";
+    } else if (today == day) {
       classString = "border w-full h-8 border-2 border-blue-500";
     } else if (dateArray?.includes(day)) {
       classString = "border w-full h-8 bg-blue-200";
-    } else if (today == day && dateArray?.includes(day)) {
-      classString = "w-full h-8 border-2 border-blue-500 bg-green-300";
     } else {
       classString = "border w-full h-8";
     }
