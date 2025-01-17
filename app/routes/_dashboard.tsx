@@ -15,6 +15,7 @@ import {
   User,
   UserCircle,
 } from "lucide-react";
+import { useEffect } from "react";
 import { sidebar } from "~/data/sidebar";
 
 export const meta: MetaFunction = () => {
@@ -25,6 +26,13 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const params = useParams();
+  useEffect(() => {
+    const dataOrg = localStorage.getItem("ALLDATA");
+    const data = JSON.parse(dataOrg!);
+    if (!data) {
+      navigate("/");
+    }
+  });
   return (
     <div className="h-screen grid grid-cols-6">
       <aside className="border-r flex-col justify-between hidden md:flex">
