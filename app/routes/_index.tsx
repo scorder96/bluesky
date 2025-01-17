@@ -118,7 +118,7 @@ export default function Index() {
             <span className="text-sm font-semibold">Follow on Bluesky</span>
           </button>
         </Link>
-        <h1 className="text-6xl font-bold">
+        <h1 className="text-5xl md:text-6xl font-bold">
           Bluesky Profile{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-blue-500 to-blue-400">
             Analytics
@@ -150,7 +150,7 @@ export default function Index() {
         </Form>
       </div>
       <Reveal>
-        <div className="grid grid-cols-2 px-32">
+        <div className="md:grid md:grid-cols-2 px-8 md:px-32">
           <div>
             <h2 className="text-4xl font-bold">Statistics that matter.</h2>
             <ul className="[&>li]:flex mt-8 space-y-4">
@@ -172,17 +172,21 @@ export default function Index() {
               </li>
             </ul>
           </div>
-          <div>
-            <img src="/screenshot-1.png" alt="consistency graph screenshot" />
-          </div>
+          <img
+            src="/screenshot-1.png"
+            alt="consistency graph screenshot"
+            className="mt-16 md:mt-0"
+          />
         </div>
       </Reveal>
       <Reveal>
-        <div className="grid grid-cols-2 px-32 mt-32">
-          <div>
-            <img src="/screenshot-2.png" alt="post scheduling screenshot" />
-          </div>
-          <div className="ps-32">
+        <div className="md:grid md:grid-cols-2 px-8 md:px-32 mt-32">
+          <img
+            src="/screenshot-2.png"
+            alt="post scheduling screenshot"
+            className="hidden md:block"
+          />
+          <div className="md:ps-32">
             <h2 className="text-4xl font-bold">Tools for growth.</h2>
             <p className="mt-8">
               Schedule upto an year worth of posts to keep up your consistency
@@ -190,6 +194,11 @@ export default function Index() {
             </p>
             <p className="mt-4">We will manage the rest.</p>
           </div>
+          <img
+            src="/screenshot-2.png"
+            alt="post scheduling screenshot"
+            className="md:hidden mt-16"
+          />
         </div>
       </Reveal>
       <Reveal>
