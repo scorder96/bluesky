@@ -1,8 +1,8 @@
 export const sidebar = [
-  { name: "Profile", route: "/profile" },
-  { name: "Statistics", route: "/statistics" },
-  { name: "Posts", route: "/posts" },
-  { name: "Schedule", route: "/schedule" },
+  { name: "Profile", route: "/profile", activeLink: "/profile" },
+  { name: "Statistics", route: "/statistics", activeLink: "/statistics" },
+  { name: "Posts", route: "/posts", activeLink: "/posts" },
+  { name: "Schedule", route: "/schedule-wall", activeLink: "/schedule" },
 ];
 export const object = [
   {

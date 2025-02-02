@@ -39,11 +39,12 @@ export default function Dashboard() {
         <ul className="mt-8">
           <Link to={"/"}>
             <h1 className="text-xl text-center mb-16">
-              Bluesky <br /> Sleekdash
+              <span className="text-blue-500">Bsky</span> <br />
+              <span className="text-2xl">SleekDash</span>
             </h1>
           </Link>
           {sidebar.map((option, index) => {
-            const active = location.pathname.includes(option.route);
+            const active = location.pathname.includes(option.activeLink);
             return (
               <li
                 key={index}
@@ -85,7 +86,7 @@ export default function Dashboard() {
       )}
       <nav className="fixed bottom-0 bg-white border-t w-full flex md:hidden">
         {sidebar.map((option, index) => {
-          const active = location.pathname.includes(option.route);
+          const active = location.pathname.includes(option.activeLink);
           return (
             <li
               key={index}
