@@ -21,11 +21,11 @@ import { Input } from "~/components/ui/input";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Bsky SleekDash | Bluesky Profile Analytics" },
+    { title: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling" },
     {
       name: "description",
       content:
-        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+        "Free tools for your Bluesky profile growth. Engagement metrics and growth tracking. Schedule your posts.",
     },
     {
       name: "og:url",
@@ -37,12 +37,12 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "og:title",
-      content: "Bsky SleekDash | Bluesky Profile Analytics",
+      content: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling",
     },
     {
       name: "og:description",
       content:
-        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking. Schedule your posts.",
     },
     {
       name: "og:image",
@@ -62,12 +62,12 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "twitter:title",
-      content: "Bsky SleekDash | Bluesky Profile Analytics",
+      content: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling",
     },
     {
       name: "twitter:description",
       content:
-        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking.",
+        "Free analytics for your Bluesky profile. Engagement metrics and growth tracking. Schedule your posts.",
     },
     {
       name: "twitter:image",
@@ -137,7 +137,7 @@ export default function Index() {
             />
           </div>
           {data == false && (
-            <div className="mt-4 text-red-500">Handle not found :(</div>
+            <p className="mt-4 text-red-500">Handle not found :(</p>
           )}
           <Button className="mt-4">
             {navigation.state == "submitting" ||
