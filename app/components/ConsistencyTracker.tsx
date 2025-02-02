@@ -8,8 +8,8 @@ export default function ConsistencyTracker({ dateArray }: Props) {
   let date = new Date();
   const today = date.getDate();
 
-  const dateList = buildCalendar().dateList;
-  const thismonthList = buildCalendar().thismonthList;
+  const dateList = buildCalendar(date.getMonth()).dateList;
+  const thismonthList = buildCalendar(date.getMonth()).thismonthList;
 
   function gridStyler(day: number, index: number) {
     var classString = "";
