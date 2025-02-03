@@ -120,7 +120,7 @@ export default function Index() {
         </Link>
         <h1 className="text-5xl md:text-6xl font-bold">
           Grow on{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-br from-blue-500 to-blue-400">
+          <span className="bg-clip-text text-transparent bg-gradient-to-br from-primary to-blue-400">
             Bluesky
           </span>
         </h1>
@@ -130,7 +130,7 @@ export default function Index() {
         </h2>
         <Form method="POST" className="mt-8 flex flex-col">
           <div className="flex items-center">
-            <div className="h-10 w-10 flex justify-center items-center text-blue-500">
+            <div className="h-10 w-10 flex justify-center items-center text-primary">
               @
             </div>
             <Input
@@ -158,19 +158,19 @@ export default function Index() {
             <h2 className="text-4xl font-bold">Statistics that matter.</h2>
             <ul className="[&>li]:flex mt-8 space-y-4">
               <li>
-                <Check className="text-blue-500" />
+                <Check className="text-primary" />
                 &nbsp;Consistency streaks
               </li>
               <li>
-                <Check className="text-blue-500" />
+                <Check className="text-primary" />
                 &nbsp;Growth over time
               </li>
               <li>
-                <Check className="text-blue-500" />
+                <Check className="text-primary" />
                 &nbsp;Deeper engagement tracking
               </li>
               <li>
-                <Check className="text-blue-500" />
+                <Check className="text-primary" />
                 &nbsp;Best performing posts
               </li>
             </ul>
@@ -206,19 +206,19 @@ export default function Index() {
       </Reveal>
       <Reveal>
         <div className="grid md:grid-cols-4 gap-4 px-8 md:px-32 mt-32">
-          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+          <div className="border-2 border-primary rounded-md flex justify-between hover:shadow-lg p-4">
             <h3 className="text-xl">Engagement</h3>
             <ChartNoAxesColumnIncreasing />
           </div>
-          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+          <div className="border-2 border-primary rounded-md flex justify-between hover:shadow-lg p-4">
             <h3 className="text-xl">Growth</h3>
             <TrendingUp />
           </div>
-          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+          <div className="border-2 border-primary rounded-md flex justify-between hover:shadow-lg p-4">
             <h3 className="text-xl">Consistency</h3>
             <Flame />
           </div>
-          <div className="border-2 border-blue-500 flex justify-between hover:shadow-lg p-4">
+          <div className="border-2 border-primary rounded-md flex justify-between hover:shadow-lg p-4">
             <h3 className="text-xl">Scheduling</h3>
             <Calendar />
           </div>
@@ -237,13 +237,13 @@ export default function Index() {
           />
         </div>
       </Reveal>
-      <div className="text-center mt-32 py-16 bg-gradient-to-b from-blue-200 to-white">
-        <h2 className="text-4xl italic">
-          " This is the BEST Bluesky analytics tool ever!! "
+      <div className="text-center mt-32 py-16">
+        <h2 className="text-4xl italic font-bold text-primary">
+          This is the BEST Bluesky analytics tool ever!
         </h2>
         <p className="mt-4">- Nobody</p>
       </div>
-      <footer className="w-full p-8 border-t border-blue-500 mt-32">
+      <footer className="w-full p-8 border-t border-primary mt-32">
         <div className="grid grid-cols-3">
           <h1 className="md:text-2xl font-bold">SleekDash.</h1>
           <ul>

@@ -1,4 +1,4 @@
-import { Clock, Loader2, Trash } from "lucide-react";
+import { Loader2, Trash } from "lucide-react";
 import {
   Sheet,
   SheetContent,

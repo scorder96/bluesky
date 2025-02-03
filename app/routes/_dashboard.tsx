@@ -39,7 +39,7 @@ export default function Dashboard() {
         <ul className="mt-8">
           <Link to={"/"}>
             <h1 className="text-xl text-center mb-16">
-              <span className="text-blue-500">Bsky</span> <br />
+              <span className="text-primary">Bsky</span> <br />
               <span className="text-2xl">SleekDash</span>
             </h1>
           </Link>
@@ -51,7 +51,7 @@ export default function Dashboard() {
                 className={
                   "flex items-center py-4 ps-8 cursor-pointer " +
                   (active
-                    ? "bg-blue-500 hover:bg-blue-500 text-white"
+                    ? "bg-primary hover:bg-primary text-white"
                     : "hover:bg-neutral-100")
                 }
                 onClick={() => navigate(option.route)}
@@ -69,7 +69,7 @@ export default function Dashboard() {
           className={
             "flex items-center py-4 ps-8 cursor-pointer " +
             (location.pathname.includes("/account")
-              ? "bg-blue-500 hover:bg-blue-500 text-white"
+              ? "bg-primary hover:bg-primary text-white"
               : "hover:bg-neutral-100")
           }
           onClick={() => navigate("/account")}
@@ -79,7 +79,7 @@ export default function Dashboard() {
       </aside>
       {navigation.state == "loading" ? (
         <div className="col-span-6 md:col-span-5 flex justify-center items-center">
-          <Loader2 className="animate-spin text-blue-500" />
+          <Loader2 className="animate-spin text-primary" />
         </div>
       ) : (
         <Outlet />
@@ -93,7 +93,7 @@ export default function Dashboard() {
               className={
                 "flex justify-center items-center py-4 cursor-pointer grow " +
                 (active
-                  ? "bg-blue-500 hover:bg-blue-500 text-white"
+                  ? "bg-primary hover:bg-primary text-white"
                   : "hover:bg-neutral-100")
               }
               onClick={() => navigate(option.route)}

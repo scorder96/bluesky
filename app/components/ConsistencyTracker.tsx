@@ -18,9 +18,9 @@ export default function ConsistencyTracker({ dateArray }: Props) {
       return classString;
     }
     if (today == day && dateArray?.includes(day)) {
-      classString = "w-full h-8 border-2 border-blue-500 bg-blue-200";
+      classString = "w-full h-8 border-2 border-primary bg-blue-200";
     } else if (today == day) {
-      classString = "border w-full h-8 border-2 border-blue-500";
+      classString = "border w-full h-8 border-2 border-primary";
     } else if (dateArray?.includes(day)) {
       classString = "border w-full h-8 bg-blue-200";
     } else {

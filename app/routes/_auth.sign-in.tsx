@@ -77,7 +77,7 @@ export default function SignIn() {
 
       <p className="mt-4 text-sm text-center">
         Don&apos;t have an account?{" "}
-        <Link to={"/sign-up"} className="text-blue-500 font-bold underline">
+        <Link to={"/sign-up"} className="text-primary font-bold underline">
           Sign Up
         </Link>
       </p>

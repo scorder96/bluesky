@@ -63,7 +63,7 @@ const LineChartComponent = ({ chartData }: Props) => {
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
-        <Line type="monotone" dataKey="property" stroke="#3b82f6" />
+        <Line type="monotone" dataKey="property" stroke="#3B82F6" />
       </LineChart>
     </ResponsiveContainer>
   );

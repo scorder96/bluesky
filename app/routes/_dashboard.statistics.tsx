@@ -183,7 +183,7 @@ export default function Statistics() {
         ) : (
           <p className="pt-4">
             You don't see much growth data since we haven't been tracking.{" "}
-            <Link to={"/sign-up"} className="font-bold text-blue-500">
+            <Link to={"/sign-up"} className="font-bold text-primary">
               Sign up
             </Link>{" "}
             to start tracking growth data.

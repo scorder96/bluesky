@@ -110,7 +110,7 @@ export default function SignUp() {
       </Button>
       <p className="mt-4 text-sm text-center">
         Already have an account?{" "}
-        <Link to={"/sign-in"} className="text-blue-500 font-bold underline">
+        <Link to={"/sign-in"} className="text-primary font-bold underline">
           Sign In
         </Link>
       </p>
