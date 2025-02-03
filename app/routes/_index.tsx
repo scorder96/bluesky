@@ -119,12 +119,15 @@ export default function Index() {
           </button>
         </Link>
         <h1 className="text-5xl md:text-6xl font-bold">
-          Bluesky Profile{" "}
+          Grow on{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-blue-500 to-blue-400">
-            Analytics
+            Bluesky
           </span>
         </h1>
-        <h2 className="text-lg mt-4">Engagement metrics and Growth tracking</h2>
+        <h2 className="text-lg mt-4">
+          Insights, Growth Tracking, Post Scheduling and a pinch of Competitive
+          Edge
+        </h2>
         <Form method="POST" className="mt-8 flex flex-col">
           <div className="flex items-center">
             <div className="h-10 w-10 flex justify-center items-center text-blue-500">
@@ -219,6 +222,19 @@ export default function Index() {
             <h3 className="text-xl">Scheduling</h3>
             <Calendar />
           </div>
+        </div>
+      </Reveal>
+      <Reveal>
+        <div className="px-8 md:px-32 mt-32 md:columns-2">
+          <h2 className="text-4xl font-bold">Profile reports, delivered.</h2>
+          <p className="mt-8">
+            No need to log in. We will send the important stuff to your inbox.
+          </p>
+          <img
+            src="illustration.svg"
+            alt="illustration of a man opening a letter"
+            className="h-60 mx-auto mt-8"
+          />
         </div>
       </Reveal>
       <div className="text-center mt-32 py-16 bg-gradient-to-b from-blue-200 to-white">
