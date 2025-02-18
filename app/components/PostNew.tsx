@@ -21,7 +21,7 @@ export function PostNew({ onScheduled }: Props) {
 
   useEffect(() => {
     highlightContent();
-  }, [Post, highlightContent]);
+  }, [Post]);
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [Time, setTime] = useState("09:00");
@@ -30,37 +30,88 @@ export function PostNew({ onScheduled }: Props) {
   const divRef = useRef<HTMLDivElement>(null);
   const today = new Date();
 
-  function jsonBuilder() {
+  const isWhitespaceChar = (char: string) => {
+    return (
+      char === " " ||
+      char === "\t" ||
+      char === "\n" ||
+      char === "\r" ||
+      char === "\f" ||
+      char === " "
+    );
+  };
+  function isValidUrl(urlString: string) {
+    try {
+      return Boolean(new URL(urlString));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function jsonBuilder() {
+    const splittedPost = Post.split(/\s/);
+    const urlRegex =
+      /^(https?:\/\/|www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+([/?#][^\s]*)?$/i;
     const now = new Date().toISOString().replace(/\+00:00$/, "Z");
     var defaultJson: any = {
       $type: "app.bsky.feed.post",
       text: Post,
       createdAt: now,
     };
-    var byteStart;
-    var byteEnd;
+    var bytestart = 0;
+    var byteend = 0;
     var facets = [];
-    const dataOrg = localStorage.getItem("ALLDATA");
-    const data = JSON.parse(dataOrg!);
-    const did = data.profileData.did;
-    for (let i = 0; i < Post.length; i++) {
-      const letter = Post[i];
-      if (letter == "#") {
-        byteStart = i + 2;
-        for (let j = i; j < Post.length; j++) {
-          const endLetter = Post[j];
-          if (endLetter == " ") {
-            byteEnd = j + 2;
-            const facetJson = {
-              index: { byteStart: byteStart, byteEnd: byteEnd },
-              features: [{ $type: "app.bsky.richtext.facet#tag", did: did }],
-            };
-            facets.push(facetJson);
-            break;
-          }
+
+    for (let i = 0; i < splittedPost.length; i++) {
+      if (splittedPost[i][0] == "#") {
+        byteend = bytestart + new Blob([splittedPost[i]]).size;
+        const facetJson = {
+          index: { byteStart: bytestart, byteEnd: byteend },
+          features: [
+            {
+              $type: "app.bsky.richtext.facet#tag",
+              tag: splittedPost[i].slice(1),
+            },
+          ],
+        };
+        facets.push(facetJson);
+      } else if (splittedPost[i][0] == "@") {
+        byteend = bytestart + new Blob([splittedPost[i]]).size;
+        const endpoint =
+          "https://bsky.social/xrpc/com.atproto.identity.resolveHandle?handle=" +
+          splittedPost[i].slice(1);
+        const response = await fetch(endpoint);
+        var did = "";
+        if (response.status == 200) {
+          const jsonResponse = await response.json();
+          did = jsonResponse.did;
         }
+        const facetJson = {
+          index: { byteStart: bytestart, byteEnd: byteend },
+          features: [
+            {
+              $type: "app.bsky.richtext.facet#mention",
+              did: did,
+            },
+          ],
+        };
+        facets.push(facetJson);
+      } else if (urlRegex.test(splittedPost[i])) {
+        byteend = bytestart + new Blob([splittedPost[i]]).size;
+        const facetJson = {
+          index: { byteStart: bytestart, byteEnd: byteend },
+          features: [
+            {
+              $type: "app.bsky.richtext.facet#link",
+              uri: splittedPost[i],
+            },
+          ],
+        };
+        facets.push(facetJson);
       }
+      bytestart += new Blob([splittedPost[i]]).size + 1;
     }
+
     defaultJson.facets = facets;
     return defaultJson;
   }
@@ -93,9 +144,10 @@ export function PostNew({ onScheduled }: Props) {
 
     const data = {
       profile: profileRecord.id,
-      post: jsonBuilder(),
+      post: await jsonBuilder(),
       postAt: postDate.toISOString(),
     };
+    // console.log(data);
 
     const record = await pb.collection("schedule").create(data);
     if (record) {
@@ -106,21 +158,29 @@ export function PostNew({ onScheduled }: Props) {
 
   function handleInput() {
     if (divRef.current) {
-      const text = divRef.current.innerText;
+      let text = divRef.current.innerText;
+      text = text.replace(/\u00A0/g, " ");
       setPost(text);
     }
   }
   function highlightContent() {
     if (divRef.current) {
       const text = divRef.current.innerText;
-      const html = text.replace(/(\S*#\S+)|(\S*@\S+)/g, (match) => {
-        if (match.startsWith("#")) {
+
+      const hashtagRegex = /(\S*#\S+)/g;
+      const mentionRegex = /(\S*@\S+)/g;
+      const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*/gi;
+
+      let html = text
+        .replace(urlRegex, (match) => {
           return `<span class="text-blue-500">${match}</span>`;
-        } else if (match.startsWith("@")) {
+        })
+        .replace(hashtagRegex, (match) => {
+          return `<span class="text-blue-500">${match}</span>`;
+        })
+        .replace(mentionRegex, (match) => {
           return `<span class="text-purple-500">${match}</span>`;
-        }
-        return match;
-      });
+        });
       divRef.current.innerHTML = html;
 
       // Move cursor to the end
@@ -156,9 +216,7 @@ export function PostNew({ onScheduled }: Props) {
           onInput={handleInput}
           role="textbox"
           aria-multiline="true"
-        >
-          I'm feeling lucky today
-        </div>
+        />
 
         <div className="flex space-x-4">
           <Image
