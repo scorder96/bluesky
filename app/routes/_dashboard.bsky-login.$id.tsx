@@ -97,7 +97,7 @@ export default function BskyLogin() {
       <Button
         variant={"link"}
         onClick={() =>
-          window.open("https://sleekdash.xyz/blog/getting-app-password")
+          window.open("https://sleekdash.xyz/blog/getting-app-password-bluesky")
         }
         className="mt-8"
       >

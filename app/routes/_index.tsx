@@ -103,7 +103,7 @@ export default function Index() {
   return (
     <>
       <nav className="shadow flex justify-between items-end px-8 py-4">
-        <h1 className="text-xl">SleekDash</h1>
+        <h1 className="text-xl font-semibold">SleekDash</h1>
         <Link to={"account"}>
           <h2>Account</h2>
         </Link>
