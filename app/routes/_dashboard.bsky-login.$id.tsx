@@ -1,4 +1,4 @@
-import { redirect, useNavigate, useParams } from "@remix-run/react";
+import { useNavigate, useParams } from "@remix-run/react";
 import { Loader2 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -13,9 +13,6 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import pb from "~/pocketbase";
-// export const loader = async () => {
-//   return redirect("/pro");
-// };
 
 export default function BskyLogin() {
   useEffect(() => {
@@ -66,9 +63,9 @@ export default function BskyLogin() {
   }
   return (
     <div className="col-span-6 md:col-span-5 flex flex-col justify-center items-center">
-      <Card className="w-1/3">
+      <Card className="w-11/12 md:w-1/3">
         <CardHeader>
-          <CardTitle>Log in to your Bluesky account</CardTitle>
+          <CardTitle>Provide your Bluesky app password</CardTitle>
           <CardDescription>
             We need this information to post on your behalf. You need to do this
             only once.
@@ -78,11 +75,12 @@ export default function BskyLogin() {
           <CardContent>
             <b className="text-blue-500">{state?.profileData.handle}</b>
             <div className="mt-4">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">App Password</Label>
               <Input
                 type="password"
                 id="password"
                 name="password"
+                placeholder="xxxx-xxxx-xxxx-xxxx"
                 onChange={(e) => setPassword(e.target.value)}
                 value={Password}
               ></Input>
@@ -90,15 +88,21 @@ export default function BskyLogin() {
             {Error && <p className="mt-4 text-red-500">{Error}</p>}
           </CardContent>
           <CardFooter>
-            <Button className="w-full">
+            <Button className="w-full" disabled={Loading}>
               {Loading ? <Loader2 className="animate-spin" /> : "Continue"}
             </Button>
           </CardFooter>
         </form>
       </Card>
-      <p className="mt-8 opacity-50">
-        Your credentials are RSA encrypted. We cannot see them.
-      </p>
+      <Button
+        variant={"link"}
+        onClick={() =>
+          window.open("https://sleekdash.xyz/blog/getting-app-password")
+        }
+        className="mt-8"
+      >
+        How to get your App Password
+      </Button>
     </div>
   );
 }
