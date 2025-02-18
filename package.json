@@ -29,6 +29,7 @@
     "isbot": "^4.1.0",
     "lucide-react": "^0.468.0",
     "pocketbase": "^0.25.0",
+    "posthog-js": "^1.215.1",
     "react-day-picker": "^8.10.1",
     "recharts": "^2.15.0",
     "tailwind-merge": "^2.5.5",
