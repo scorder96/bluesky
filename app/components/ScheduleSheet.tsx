@@ -16,7 +16,7 @@ interface Props {
   day: number;
   scheduledDates: Array<number>;
   scheduledTimes: Array<string>;
-  posts: Array<string>;
+  posts: Array<any>;
   recordids: Array<string>;
   onClose: () => void;
 }
@@ -72,7 +72,7 @@ export default function ScheduleSheet({
                 <div>
                   <i>At {scheduledTimes[index]}</i>
                   <br />
-                  <p className="mt-2">{posts[index]}</p>
+                  <p className="mt-2">{posts[index].text}</p>
                 </div>
                 <Button
                   variant={"outline"}
