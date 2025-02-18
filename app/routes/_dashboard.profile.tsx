@@ -1,6 +1,7 @@
 import { useNavigate, useRouteError } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
+import Pro from "~/components/Pro";
 import {
   Card,
   CardContent,
@@ -57,6 +58,7 @@ export default function Profile() {
     setstate(data);
   }, []);
   const [state, setstate] = useState<any>();
+  const [ProDialog, setProDialog] = useState(false);
   // const data = {
   //   displayName: "scorder",
   //   handle: "scorder.bsky.social",
@@ -67,7 +69,6 @@ export default function Profile() {
   //   banner: null,
   //   avatar: null,
   // };
-  const navigate = useNavigate();
 
   return (
     <div className="col-span-6 md:col-span-5 flex flex-col justify-center items-center px-8 space-y-4">
@@ -112,11 +113,10 @@ export default function Profile() {
       </Card>
       <Combobox
         list={["+ Add profile"]}
-        placeholder="switch"
-        onSelected={() => {
-          navigate("/pro");
-        }}
+        placeholder="switch profile"
+        onSelected={() => setProDialog(true)}
       />
+      {ProDialog && <Pro />}
     </div>
   );
   // return <></>;
