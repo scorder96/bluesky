@@ -19,10 +19,16 @@ interface Props {
   placeholder: string;
   list: Array<string>;
   onSelected: (value: string) => void;
+  defaultSelection?: string;
 }
-export default function Combobox({ placeholder, list, onSelected }: Props) {
+export default function Combobox({
+  placeholder,
+  list,
+  onSelected,
+  defaultSelection,
+}: Props) {
   const [Open, setOpen] = useState(false);
-  const [Selected, setSelected] = useState(String);
+  const [Selected, setSelected] = useState(defaultSelection);
   const navigate = useNavigate();
   return (
     <Popover open={Open} onOpenChange={setOpen}>

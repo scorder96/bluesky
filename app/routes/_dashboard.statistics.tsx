@@ -2,6 +2,7 @@ import { Link, useParams, useRouteError } from "@remix-run/react";
 import {
   Flame,
   Heart,
+  Loader2,
   MessageSquare,
   Quote,
   Repeat,
@@ -27,12 +28,14 @@ export function ErrorBoundary() {
   );
 }
 export default function Statistics() {
+  const [state, setstate] = useState<any>();
   useEffect(() => {
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
     setstate(data);
+    generateChart(properties[0], data);
   }, []);
-  const [state, setstate] = useState<any>();
+  const [Loading, setLoading] = useState(false);
   // const data = useLoaderData<typeof loader>();
   const params = useParams();
   // const globalState = useGlobalState();
@@ -59,10 +62,12 @@ export default function Statistics() {
 
   const [chartData, setChartData] = useState(Array<object>);
   // var chartData: Array<object> = [];
-  async function generateChart(value: String) {
+  async function generateChart(value: String, data?: any) {
+    setLoading(true);
+    const handle = state ? state.profileData.handle : data.profileData.handle;
     const tempchartData = [];
     const resultList = await pb.collection("tracker").getList(1, 7, {
-      filter: `handle="${state?.profileData.handle}"`,
+      filter: `handle="${handle}"`,
       sort: "created",
     });
 
@@ -105,6 +110,7 @@ export default function Statistics() {
       tempchartData[i] = obj;
     }
     setChartData(tempchartData);
+    setLoading(false);
   }
   return (
     <div className="col-span-6 md:col-span-5 px-6 py-8 space-y-4 overflow-y-auto">
@@ -167,21 +173,27 @@ export default function Statistics() {
             list={properties}
             placeholder="select"
             onSelected={generateChart}
+            defaultSelection={properties[0]}
           />
         </div>
-        <LineChartComponent chartData={chartData} />
+        {Loading ? (
+          <Loader2 className="animate-spin text-primary" />
+        ) : (
+          <LineChartComponent chartData={chartData} />
+        )}
       </div>
-      {chartData.length == 0 && (
+      {/* {chartData.length == 0 && (
         <p className="pt-4">Select a property to see data 👆</p>
-      )}
+      )} */}
+      <div className="h-4" />
       {chartData.length == 1 &&
         (pb.authStore.isValid ? (
-          <p className="pt-4">
+          <p>
             You don't see much growth data since we haven't been tracking. We
             will start tracking this profile from now.
           </p>
         ) : (
-          <p className="pt-4">
+          <p>
             You don't see much growth data since we haven't been tracking.{" "}
             <Link to={"/sign-up"} className="font-bold text-primary">
               Sign up
@@ -190,31 +202,6 @@ export default function Statistics() {
           </p>
         ))}
       <div className="h-16" />
-      {/* Consistency
-        <div className="grid grid-cols-12">
-          <ul className="grid grid-rows-8">
-            <div />
-            <div className="row-span-7 text-xs">
-              {days.map((day) => {
-                return <li>{day}</li>;
-              })}
-            </div>
-          </ul>
-          <ul className="flex justify-between col-span-11 text-xs">
-            {months.map((month) => {
-              return (
-                <header>
-                  {month}
-                  <div className="grid grid-cols-4 mt-2">
-                    {week.map((week) => {
-                      return <div className="bg-neutral-200 h-2 w-2 me-2" />;
-                    })}
-                  </div>
-                </header>
-              );
-            })}
-          </ul>
-        </div> */}
     </div>
   );
 }
