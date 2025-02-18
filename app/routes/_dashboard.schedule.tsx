@@ -1,17 +1,4 @@
-// export const loader = async () => {
-//   return redirect("/pro");
-// };
-
-import { Link, Outlet } from "@remix-run/react";
-import {
-  Check,
-  CheckCircle,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  Edit,
-  Loader2,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PostNew } from "~/components/PostNew";
 import ScheduleSheet from "~/components/ScheduleSheet";
@@ -43,7 +30,7 @@ export default function Schedule() {
       return classString;
     }
     if (day == today && Month == date.getMonth()) {
-      classString = "border-2 border-blue-500";
+      classString = "border-2 border-primary";
       return classString;
     }
   }
@@ -97,7 +84,7 @@ export default function Schedule() {
         })}
       </div>
       {Loading ? (
-        <Loader2 className="animate-spin mx-auto my-auto text-blue-500" />
+        <Loader2 className="animate-spin mx-auto my-auto text-primary" />
       ) : (
         <div className="grid grid-cols-7 grid-rows-4 mt-4 mb-8 md:mb-8 grow auto-rows-fr">
           {dateList.map((day, index) => {
@@ -123,7 +110,7 @@ export default function Schedule() {
                 >
                   {day}
                   {noOfPosts > 0 && thismonthList[index] && (
-                    <div className="flex justify-center items-center text-blue-500 font-bold text-xl">
+                    <div className="flex justify-center items-center text-primary font-bold text-xl">
                       {noOfPosts} <Clock size={20} className="ms-1" />
                     </div>
                   )}
