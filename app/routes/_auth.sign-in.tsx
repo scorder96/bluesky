@@ -27,6 +27,7 @@ export default function SignIn() {
     setLoading(false);
   }
   async function googleAuth() {
+    setLoading(true);
     const authData = await pb
       .collection("users")
       .authWithOAuth2({ provider: "google" })
@@ -34,6 +35,7 @@ export default function SignIn() {
     if (pb.authStore.isValid) {
       navigate("/");
     }
+    setLoading(false);
   }
   return (
     <div>

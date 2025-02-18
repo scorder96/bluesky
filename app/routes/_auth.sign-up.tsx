@@ -61,6 +61,7 @@ export default function SignUp() {
     setLoading(false);
   }
   async function googleAuth() {
+    setLoading(true);
     const authData = await pb
       .collection("users")
       .authWithOAuth2({ provider: "google" })
@@ -68,6 +69,7 @@ export default function SignUp() {
     if (pb.authStore.isValid) {
       navigate("/");
     }
+    setLoading(false);
   }
   return (
     <div>
