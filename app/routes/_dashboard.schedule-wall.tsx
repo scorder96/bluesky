@@ -5,6 +5,10 @@ import pb from "~/pocketbase";
 
 export default function ScheduleWall() {
   useEffect(() => {
+    if (!pb.authStore.isValid) {
+      navigate("sign-up");
+      return;
+    }
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
     checkPassword(data.profileData.handle);
@@ -22,7 +26,7 @@ export default function ScheduleWall() {
   }
   return (
     <div className="col-span-6 md:col-span-5 flex justify-center items-center">
-      <Loader2 className="animate-spin text-blue-500" />
+      <Loader2 className="animate-spin text-primary" />
     </div>
   );
 }
