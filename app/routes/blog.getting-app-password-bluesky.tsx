@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 
 export default function AppPassword() {
   return (
-    <article className="m-16 me-8 col-span-3">
+    <article className="m-8 md:m-16 me-8 col-span-4 md:col-span-3">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         Getting your App Password on Bluesky
       </h1>
@@ -63,7 +63,7 @@ export default function AppPassword() {
       <img
         src="/blog/getting-app-password-bluesky/1.png"
         alt="click on privacy and security"
-        className="ms-6 w-1/2"
+        className="ms-6 md:w-1/2"
       />
       <p className="leading-7 [&:not(:first-child)]:mt-6 ms-6">
         Then, click on <b>App Passwords</b>.
@@ -72,7 +72,7 @@ export default function AppPassword() {
       <img
         src="/blog/getting-app-password-bluesky/2.png"
         alt="click on app passwords"
-        className="ms-6 w-1/2"
+        className="ms-6 md:w-1/2"
       />
       <br />
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
@@ -85,7 +85,7 @@ export default function AppPassword() {
       <img
         src="/blog/getting-app-password-bluesky/3.png"
         alt="click on add app password"
-        className="ms-6 w-1/2"
+        className="ms-6 md:w-1/2"
       />
       <p className="leading-7 [&:not(:first-child)]:mt-6 ms-6">
         Enter a unique name for this app password, or just click <b>Next</b> to
@@ -95,7 +95,7 @@ export default function AppPassword() {
       <img
         src="/blog/getting-app-password-bluesky/4.png"
         alt="enter a name for app password"
-        className="ms-6 w-1/2"
+        className="ms-6 md:w-1/2"
       />
       <p className="leading-7 [&:not(:first-child)]:mt-6 ms-6">
         An app password will be generated for you (it will be a 16-character
@@ -113,7 +113,7 @@ export default function AppPassword() {
       <img
         src="/blog/getting-app-password-bluesky/5.png"
         alt="copy the app password"
-        className="ms-6 w-1/2"
+        className="ms-6 md:w-1/2"
       />
       <br />
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">

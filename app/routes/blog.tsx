@@ -15,7 +15,7 @@ export default function Blog() {
       </nav>
       <main className="grid grid-cols-4">
         <Outlet />
-        <aside className="p-4 pt-16">
+        <aside className="hidden md:block p-4 pt-16">
           <BlogSide />
         </aside>
       </main>

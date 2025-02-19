@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
 
 export default function Grow() {
   return (
-    <article className="m-16 me-8 col-span-3">
+    <article className="m-8 md:m-16 me-8 col-span-4 md:col-span-3">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         The Ultimate Guide to Bluesky Growth
       </h1>
