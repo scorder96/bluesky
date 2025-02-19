@@ -1,4 +1,15 @@
-import { Link } from "@remix-run/react";
+import { Link, MetaFunction } from "@remix-run/react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "The Ultimate Guide to Bluesky Growth" },
+    {
+      name: "description",
+      content:
+        "What is the best way to grow organically on this innovative platform? This article will break down all the methods and steps to grow organically on Bluesky.",
+    },
+  ];
+};
 
 export default function Grow() {
   return (
