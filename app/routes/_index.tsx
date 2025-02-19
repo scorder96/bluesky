@@ -238,11 +238,12 @@ export default function Index() {
           />
         </div>
       </Reveal>
-      <div className="text-center mt-32 py-16">
+      <div className="text-center md:px-32 mt-32 py-16">
         <h2 className="text-4xl italic font-bold text-primary">
-          This is the BEST Bluesky analytics tool ever!
+          It takes 20 minutes to set up posts for the month, then I sit back and
+          enjoy the engagement.
         </h2>
-        <p className="mt-4">- Nobody</p>
+        {/* <p className="mt-4">- Nobody</p> */}
       </div>
       <Footer />
     </>
