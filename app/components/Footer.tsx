@@ -12,13 +12,13 @@ export default function Footer() {
             <Link to={"/"}>Home</Link>
           </li>
           <li className="hover:text-primary hover:underline">
-            <Link to={"/"}>Dashboard</Link>
+            <Link to={"/profile"}>Dashboard</Link>
           </li>
           <li className="hover:text-primary hover:underline">
-            <Link to={"/"}>Blog</Link>
+            <Link to={"/blog"}>Blog</Link>
           </li>
           <li className="hover:text-primary hover:underline">
-            <Link to={"/"}>Account</Link>
+            <Link to={"/account"}>Account</Link>
           </li>
         </ul>
         <Link
