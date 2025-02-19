@@ -6,7 +6,7 @@ import pb from "~/pocketbase";
 export default function ScheduleWall() {
   useEffect(() => {
     if (!pb.authStore.isValid) {
-      navigate("sign-up");
+      navigate("/sign-up");
       return;
     }
     const dataOrg = localStorage.getItem("ALLDATA");
