@@ -1,5 +1,6 @@
 import { Link, Outlet } from "@remix-run/react";
 import BlogSide from "~/components/BlogSide";
+import Footer from "~/components/Footer";
 
 export default function Blog() {
   return (
@@ -18,6 +19,7 @@ export default function Blog() {
           <BlogSide />
         </aside>
       </main>
+      <Footer />
     </div>
   );
 }

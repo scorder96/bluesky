@@ -15,6 +15,7 @@ import {
   Loader2,
   TrendingUp,
 } from "lucide-react";
+import Footer from "~/components/Footer";
 import Reveal from "~/components/Reveal";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -243,23 +244,7 @@ export default function Index() {
         </h2>
         <p className="mt-4">- Nobody</p>
       </div>
-      <footer className="w-full p-8 border-t border-primary mt-32">
-        <div className="grid grid-cols-3">
-          <h1 className="md:text-2xl font-bold">SleekDash.</h1>
-          <ul>
-            <li>Home</li>
-            <li>Profile</li>
-            <li>Statistics</li>
-            <li>Posts</li>
-            <li>Schedule</li>
-            <li>Account</li>
-          </ul>
-          <Link to={"https://bsky.app/profile/sleekdash.xyz"} target="_blank">
-            🦋 <u>Follow on Bluseky</u>
-          </Link>
-        </div>
-        <p className="text-center mt-8">Copyright &copy; 2025 SleekDash</p>
-      </footer>
+      <Footer />
     </>
   );
 }
