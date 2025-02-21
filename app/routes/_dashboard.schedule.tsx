@@ -40,11 +40,17 @@ export default function Schedule() {
     var scheduleTime: Array<string> = [];
     var posts: Array<string> = [];
     var scheduleIDs: Array<string> = [];
-    const records = await pb.collection("schedule").getFullList();
-    const date = new Date();
+    const records = await pb
+      .collection("schedule")
+      .getFullList({ expand: "profile" });
+    const dataOrg = localStorage.getItem("ALLDATA");
+    const data = JSON.parse(dataOrg!);
     records.forEach((record) => {
-      const recordDate = new Date(record.postAt);
+      if (record.expand!.profile.did != data.profileData.did) {
+        return;
+      }
 
+      const recordDate = new Date(record.postAt);
       if (recordDate.getMonth() == Month) {
         scheduleDate.push(recordDate.getDate());
         scheduleTime.push(
