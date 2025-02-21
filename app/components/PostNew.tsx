@@ -1,4 +1,4 @@
-import { Clock, Edit, Image, Loader2, Repeat, Video } from "lucide-react";
+import { Clock, Edit, Loader2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -8,45 +8,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { DatePicker } from "./DatePicker";
 import TimePicker from "./ui/TimePicker";
 import pb from "~/pocketbase";
+import PostInput from "./PostInput";
 
 interface Props {
   onScheduled: () => void;
 }
 export function PostNew({ onScheduled }: Props) {
   const [Post, setPost] = useState(String);
-
-  useEffect(() => {
-    highlightContent();
-  }, [Post]);
-
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [Time, setTime] = useState("09:00");
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(String);
-  const divRef = useRef<HTMLDivElement>(null);
   const today = new Date();
 
-  const isWhitespaceChar = (char: string) => {
-    return (
-      char === " " ||
-      char === "\t" ||
-      char === "\n" ||
-      char === "\r" ||
-      char === "\f" ||
-      char === " "
-    );
-  };
-  function isValidUrl(urlString: string) {
-    try {
-      return Boolean(new URL(urlString));
-    } catch (e) {
-      return false;
-    }
-  }
+  // const isWhitespaceChar = (char: string) => {
+  //   return (
+  //     char === " " ||
+  //     char === "\t" ||
+  //     char === "\n" ||
+  //     char === "\r" ||
+  //     char === "\f" ||
+  //     char === " "
+  //   );
+  // };
 
   async function jsonBuilder() {
     const splittedPost = Post.split(/\s/);
@@ -156,43 +144,6 @@ export function PostNew({ onScheduled }: Props) {
     setLoading(false);
   }
 
-  function handleInput() {
-    if (divRef.current) {
-      let text = divRef.current.innerText;
-      text = text.replace(/\u00A0/g, " ");
-      setPost(text);
-    }
-  }
-  function highlightContent() {
-    if (divRef.current) {
-      const text = divRef.current.innerText;
-
-      const hashtagRegex = /(\S*#\S+)/g;
-      const mentionRegex = /(\S*@\S+)/g;
-      const urlRegex = /https?:\/\/[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*/gi;
-
-      let html = text
-        .replace(urlRegex, (match) => {
-          return `<span class="text-blue-500">${match}</span>`;
-        })
-        .replace(hashtagRegex, (match) => {
-          return `<span class="text-blue-500">${match}</span>`;
-        })
-        .replace(mentionRegex, (match) => {
-          return `<span class="text-purple-500">${match}</span>`;
-        });
-      divRef.current.innerHTML = html;
-
-      // Move cursor to the end
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(divRef.current);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-    }
-  }
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -204,36 +155,16 @@ export function PostNew({ onScheduled }: Props) {
         <DialogHeader>
           <DialogTitle>Schedule a post</DialogTitle>
         </DialogHeader>
-        {/* <Textarea
-          placeholder="I'm feeling lucky today."
-          onChange={(e) => setPost(e.target.value)}
-          value={Post}
-        /> */}
-        <div
+        <PostInput onPostChange={setPost} post={Post} />
+        {/* <div
           ref={divRef}
           className="w-full min-h-[6rem] ps-0 p-2 text-lg border-none focus:outline-none bg-transparent overflow-auto"
           contentEditable
           onInput={handleInput}
           role="textbox"
           aria-multiline="true"
-        />
-
-        <div className="flex space-x-4">
-          <Image
-            className="opacity-50 text-blue-500 cursor-not-allowed"
-            size={20}
-          />
-          <Video
-            className="opacity-50 text-blue-500 cursor-not-allowed"
-            size={20}
-          />
-          <Repeat
-            className="opacity-50 text-blue-500 cursor-not-allowed"
-            size={20}
-          />
-        </div>
+        /> */}
         <hr className="my-2" />
-        {/* <DialogTitle className="mt-4">Schedule</DialogTitle> */}
         <div className="flex space-x-4">
           <DatePicker onDateSelect={setDate} date={date} />
           <TimePicker onTimeSelect={setTime} time={Time} />
