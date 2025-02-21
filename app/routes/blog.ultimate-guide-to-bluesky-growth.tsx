@@ -8,6 +8,27 @@ export const meta: MetaFunction = () => {
       content:
         "What is the best way to grow organically on this innovative platform? This article will break down all the methods and steps to grow organically on Bluesky.",
     },
+    {
+      name: "og:url",
+      content: "https://sleekdash.xyz/blog/getting-app-password-bluesky",
+    },
+    {
+      name: "og:type",
+      content: "website",
+    },
+    {
+      name: "og:title",
+      content: "The Ultimate Guide to Bluesky Growth",
+    },
+    {
+      name: "og:description",
+      content:
+        "What is the best way to grow organically on this innovative platform? This article will break down all the methods and steps to grow organically on Bluesky.",
+    },
+    {
+      name: "og:image",
+      content: "/sleekdash-rectangle.png",
+    },
   ];
 };
 
