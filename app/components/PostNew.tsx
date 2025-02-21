@@ -164,7 +164,6 @@ export function PostNew({ onScheduled }: Props) {
           role="textbox"
           aria-multiline="true"
         /> */}
-        <hr className="my-2" />
         <div className="flex space-x-4">
           <DatePicker onDateSelect={setDate} date={date} />
           <TimePicker onTimeSelect={setTime} time={Time} />
