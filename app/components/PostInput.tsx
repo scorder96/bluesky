@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Image, Repeat, Smile, Video } from "lucide-react";
+import { Image, Loader2, Repeat, Reply, Smile, Video } from "lucide-react";
 import { Button } from "./ui/button";
 import EmojiPicker from "./EmojiPicker";
+// import ReplyTo from "./ReplyTo";
 
 interface Props {
   onPostChange: (text: string) => void;
   post: string;
+  onWebEmbed: (title: string, description: string) => void;
 }
 
-export default function PostInput({ onPostChange, post }: Props) {
+export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
   useEffect(() => {
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
@@ -16,7 +18,23 @@ export default function PostInput({ onPostChange, post }: Props) {
   }, []);
   const [state, setstate] = useState<any>();
   const [Emojis, setEmojis] = useState(false);
+  const [ReplyingTo, setReplyingTo] = useState(false);
+  const [ReplyingToURL, setReplyingToURL] = useState(String);
+  const [WebEmbed, setWebEmbed] = useState(false);
+  const [WebEmbedJson, setWebEmbedJson] = useState(Object);
+  const [EmbedLoading, setEmbedLoading] = useState(false);
   // const [inputText, setInputText] = useState<string>("");
+
+  const isWhitespaceChar = (char: string) => {
+    return (
+      char === " " ||
+      char === "\t" ||
+      char === "\n" ||
+      char === "\r" ||
+      char === "\f" ||
+      char === " "
+    );
+  };
 
   // Function to highlight hashtags, mentions, and links
   const highlightText = (text: string) => {
@@ -67,9 +85,57 @@ export default function PostInput({ onPostChange, post }: Props) {
         console.log(target.files[0]); // Pass selected file
       }
     });
-
     input.click();
   }
+  async function getMetadataFromURL(url: string) {
+    setEmbedLoading(true);
+    try {
+      const response = await fetch(url);
+      // if (!response.ok) throw new Error("Failed to fetch the URL");
+
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const title = doc.querySelector("title")?.innerText || "";
+      const description =
+        doc
+          .querySelector("meta[name='description']")
+          ?.getAttribute("content") || "";
+      const thumbnail =
+        doc
+          .querySelector("meta[property='og:image']")
+          ?.getAttribute("content") ||
+        doc
+          .querySelector("meta[name='twitter:image']")
+          ?.getAttribute("content") ||
+        "";
+
+      setEmbedLoading(false);
+      return { title, description, thumbnail };
+    } catch (error) {
+      console.error("Error fetching metadata:", error);
+      return { title: "", description: "", thumbnail: "" };
+    }
+  }
+  async function handleChange(text: string) {
+    onPostChange(text);
+    const linkRegex = /https?:\/\/[^\s]+/g;
+    if (linkRegex.test(text)) {
+      if (isWhitespaceChar(text[text.length - 1])) {
+        if (!WebEmbed) {
+          setWebEmbed(true);
+          const matchedURL = text.match(linkRegex);
+          const metadata = await getMetadataFromURL(matchedURL![0]);
+          onWebEmbed(metadata.title, metadata.description);
+          setWebEmbedJson(metadata);
+        }
+      }
+    } else {
+      setWebEmbed(false);
+    }
+  }
+
   return (
     <div>
       {/* Input Field */}
@@ -77,7 +143,7 @@ export default function PostInput({ onPostChange, post }: Props) {
         className="w-full h-24 outline-none"
         placeholder="What's happening?"
         value={post}
-        onChange={(e) => onPostChange(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
         maxLength={maxLength}
       />
       <div className="flex justify-between mt-2">
@@ -89,17 +155,16 @@ export default function PostInput({ onPostChange, post }: Props) {
           >
             <Smile className="text-blue-500" />
           </Button>
+          {/* <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setReplyingTo(!ReplyingTo)}
+          >
+            <Reply className="text-blue-500" />
+          </Button>
           <Button variant="outline" size="icon" onClick={inputImage}>
             <Image className="text-blue-500" />
-          </Button>
-          <Video
-            className="opacity-50 text-blue-500 cursor-not-allowed"
-            size={20}
-          />
-          <Repeat
-            className="opacity-50 text-blue-500 cursor-not-allowed"
-            size={20}
-          />
+          </Button> */}
         </div>
         <div className="text-sm">
           <span
@@ -119,6 +184,9 @@ export default function PostInput({ onPostChange, post }: Props) {
       {Emojis && (
         <EmojiPicker onSelection={(emoji) => onPostChange(post + emoji)} />
       )}
+      {/* {ReplyingTo && (
+        <ReplyTo onChange={setReplyingToURL} link={ReplyingToURL} />
+      )} */}
       {/* Highlighted Preview */}
       <div className="grid grid-cols-6 space-x-4 mt-2 p-4 shadow rounded-lg">
         <img
@@ -128,9 +196,32 @@ export default function PostInput({ onPostChange, post }: Props) {
           width={50}
           className="rounded-full"
         />
-        <p className="text-gray-800 whitespace-pre-wrap col-span-5">
+        <div className="text-gray-800 whitespace-pre-wrap col-span-5">
           {highlightText(post)}
-        </p>
+          <br />
+          {WebEmbed && (
+            <div className="bg-neutral-200 p-2 mt-2">
+              {EmbedLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>
+                  <p className="text-sm font-semibold">{WebEmbedJson.title}</p>
+                  <p className="text-xs">
+                    {WebEmbedJson.description?.slice(0, 30) + "..."}
+                  </p>
+                </>
+              )}
+              <Button
+                variant="outline"
+                size={"sm"}
+                className="mt-2"
+                onClick={inputImage}
+              >
+                Remove Embed
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

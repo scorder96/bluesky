@@ -13,6 +13,7 @@ import { DatePicker } from "./DatePicker";
 import TimePicker from "./ui/TimePicker";
 import pb from "~/pocketbase";
 import PostInput from "./PostInput";
+import useJSONBuilder from "~/hooks/useJSONBuilder";
 
 interface Props {
   onScheduled: () => void;
@@ -21,6 +22,7 @@ export function PostNew({ onScheduled }: Props) {
   const [Post, setPost] = useState(String);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [Time, setTime] = useState("09:00");
+  const [WebEmbed, setWebEmbed] = useState(Object);
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(String);
   const today = new Date();
@@ -35,74 +37,6 @@ export function PostNew({ onScheduled }: Props) {
   //     char === " "
   //   );
   // };
-
-  async function jsonBuilder() {
-    const splittedPost = Post.split(/\s/);
-    const urlRegex =
-      /^(https?:\/\/|www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+([/?#][^\s]*)?$/i;
-    const now = new Date().toISOString().replace(/\+00:00$/, "Z");
-    var defaultJson: any = {
-      $type: "app.bsky.feed.post",
-      text: Post,
-      createdAt: now,
-    };
-    var bytestart = 0;
-    var byteend = 0;
-    var facets = [];
-
-    for (let i = 0; i < splittedPost.length; i++) {
-      if (splittedPost[i][0] == "#") {
-        byteend = bytestart + new Blob([splittedPost[i]]).size;
-        const facetJson = {
-          index: { byteStart: bytestart, byteEnd: byteend },
-          features: [
-            {
-              $type: "app.bsky.richtext.facet#tag",
-              tag: splittedPost[i].slice(1),
-            },
-          ],
-        };
-        facets.push(facetJson);
-      } else if (splittedPost[i][0] == "@") {
-        byteend = bytestart + new Blob([splittedPost[i]]).size;
-        const endpoint =
-          "https://bsky.social/xrpc/com.atproto.identity.resolveHandle?handle=" +
-          splittedPost[i].slice(1);
-        const response = await fetch(endpoint);
-        var did = "";
-        if (response.status == 200) {
-          const jsonResponse = await response.json();
-          did = jsonResponse.did;
-        }
-        const facetJson = {
-          index: { byteStart: bytestart, byteEnd: byteend },
-          features: [
-            {
-              $type: "app.bsky.richtext.facet#mention",
-              did: did,
-            },
-          ],
-        };
-        facets.push(facetJson);
-      } else if (urlRegex.test(splittedPost[i])) {
-        byteend = bytestart + new Blob([splittedPost[i]]).size;
-        const facetJson = {
-          index: { byteStart: bytestart, byteEnd: byteend },
-          features: [
-            {
-              $type: "app.bsky.richtext.facet#link",
-              uri: splittedPost[i],
-            },
-          ],
-        };
-        facets.push(facetJson);
-      }
-      bytestart += new Blob([splittedPost[i]]).size + 1;
-    }
-
-    defaultJson.facets = facets;
-    return defaultJson;
-  }
 
   async function schedulePost() {
     setError("");
@@ -129,10 +63,10 @@ export function PostNew({ onScheduled }: Props) {
     const profileRecord = await pb
       .collection("profiles")
       .getFirstListItem(`handle="${localData.profileData.handle}"`);
-
+    const postJSON = await useJSONBuilder(Post, WebEmbed);
     const data = {
       profile: profileRecord.id,
-      post: await jsonBuilder(),
+      post: postJSON,
       postAt: postDate.toISOString(),
     };
     // console.log(data);
@@ -155,7 +89,11 @@ export function PostNew({ onScheduled }: Props) {
         <DialogHeader>
           <DialogTitle>Schedule a post</DialogTitle>
         </DialogHeader>
-        <PostInput onPostChange={setPost} post={Post} />
+        <PostInput
+          onPostChange={setPost}
+          post={Post}
+          onWebEmbed={setWebEmbed}
+        />
         {/* <div
           ref={divRef}
           className="w-full min-h-[6rem] ps-0 p-2 text-lg border-none focus:outline-none bg-transparent overflow-auto"
