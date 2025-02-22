@@ -63,7 +63,9 @@ export function PostNew({ onScheduled }: Props) {
     const profileRecord = await pb
       .collection("profiles")
       .getFirstListItem(`handle="${localData.profileData.handle}"`);
+
     const postJSON = await useJSONBuilder(Post, WebEmbed);
+
     const data = {
       profile: profileRecord.id,
       post: postJSON,
@@ -92,7 +94,9 @@ export function PostNew({ onScheduled }: Props) {
         <PostInput
           onPostChange={setPost}
           post={Post}
-          onWebEmbed={setWebEmbed}
+          onWebEmbed={(title: string, desc: string) =>
+            setWebEmbed({ title: title, description: desc })
+          }
         />
         {/* <div
           ref={divRef}

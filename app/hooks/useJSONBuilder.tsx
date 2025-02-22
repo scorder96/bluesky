@@ -61,16 +61,18 @@ export default async function jsonBuilder(
           },
         ],
       };
-      const embedJson = {
-        $type: "app.bsky.embed.external",
-        external: {
-          uri: splittedPost[i],
-          title: webEmbed.title,
-          description: webEmbed.description,
-        },
-      };
       facets.push(facetJson);
-      defaultJson.embed = embedJson;
+      if (webEmbed.title != "no-embed" && webEmbed.description != "no-embed") {
+        const embedJson = {
+          $type: "app.bsky.embed.external",
+          external: {
+            uri: splittedPost[i],
+            title: webEmbed.title,
+            description: webEmbed.description,
+          },
+        };
+        defaultJson.embed = embedJson;
+      }
     }
     bytestart += new Blob([splittedPost[i]]).size + 1;
   }

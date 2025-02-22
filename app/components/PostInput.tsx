@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import { Image, Loader2, Repeat, Reply, Smile, Video } from "lucide-react";
+import {
+  Image,
+  Loader2,
+  Quote,
+  Repeat,
+  Reply,
+  Smile,
+  Video,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import EmojiPicker from "./EmojiPicker";
+// import PostQuote from "./PostQuote";
 // import ReplyTo from "./ReplyTo";
 
 interface Props {
@@ -18,8 +27,8 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
   }, []);
   const [state, setstate] = useState<any>();
   const [Emojis, setEmojis] = useState(false);
-  const [ReplyingTo, setReplyingTo] = useState(false);
-  const [ReplyingToURL, setReplyingToURL] = useState(String);
+  // const [Quoting, setQuoting] = useState(false);
+  // const [QuotingURL, setQuotingURL] = useState(String);
   const [WebEmbed, setWebEmbed] = useState(false);
   const [WebEmbedJson, setWebEmbedJson] = useState(Object);
   const [EmbedLoading, setEmbedLoading] = useState(false);
@@ -135,11 +144,11 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
           {/* <Button
             variant="outline"
             size="icon"
-            onClick={() => setReplyingTo(!ReplyingTo)}
+            onClick={() => setQuoting(!Quoting)}
           >
-            <Reply className="text-blue-500" />
-          </Button>
-          <Button variant="outline" size="icon" onClick={inputImage}>
+            <Quote className="text-blue-500" />
+          </Button> */}
+          {/* <Button variant="outline" size="icon" onClick={inputImage}>
             <Image className="text-blue-500" />
           </Button> */}
         </div>
@@ -161,9 +170,7 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
       {Emojis && (
         <EmojiPicker onSelection={(emoji) => onPostChange(post + emoji)} />
       )}
-      {/* {ReplyingTo && (
-        <ReplyTo onChange={setReplyingToURL} link={ReplyingToURL} />
-      )} */}
+      {/* {Quoting && <PostQuote onChange={setQuotingURL} link={QuotingURL} />} */}
       {/* Highlighted Preview */}
       <div className="grid grid-cols-6 space-x-4 mt-2 p-4 shadow rounded-lg">
         <img
@@ -192,7 +199,10 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
                 variant="outline"
                 size={"sm"}
                 className="mt-2"
-                onClick={inputImage}
+                onClick={() => {
+                  onWebEmbed("no-embed", "no-embed");
+                  setWebEmbed(false);
+                }}
               >
                 Remove Embed
               </Button>
