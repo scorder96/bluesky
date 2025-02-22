@@ -94,6 +94,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -107,6 +108,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -120,6 +122,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -133,6 +136,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -146,6 +150,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -159,6 +164,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -172,6 +178,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -185,6 +192,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
@@ -198,6 +206,7 @@ export default function EmojiPicker({ onSelection }: Props) {
                 <div
                   className="hover:scale-150 inline-block cursor-pointer"
                   onClick={() => onSelection(emoji.emoji)}
+                  key={emoji.emoji}
                 >
                   {emoji.emoji}
                 </div>
