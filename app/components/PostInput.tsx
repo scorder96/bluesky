@@ -89,34 +89,11 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
   }
   async function getMetadataFromURL(url: string) {
     setEmbedLoading(true);
-    try {
-      const response = await fetch(url);
-      // if (!response.ok) throw new Error("Failed to fetch the URL");
-
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-
-      const title = doc.querySelector("title")?.innerText || "";
-      const description =
-        doc
-          .querySelector("meta[name='description']")
-          ?.getAttribute("content") || "";
-      const thumbnail =
-        doc
-          .querySelector("meta[property='og:image']")
-          ?.getAttribute("content") ||
-        doc
-          .querySelector("meta[name='twitter:image']")
-          ?.getAttribute("content") ||
-        "";
-
-      setEmbedLoading(false);
-      return { title, description, thumbnail };
-    } catch (error) {
-      console.error("Error fetching metadata:", error);
-      return { title: "", description: "", thumbnail: "" };
-    }
+    const metaData = await fetch("https://api.linkpreview.net/?q=" + url, {
+      headers: { "X-Linkpreview-Api-Key": "1a64974222906c945b81f324c8fea16f" },
+    }).then((response) => response.json());
+    setEmbedLoading(false);
+    return metaData;
   }
   async function handleChange(text: string) {
     onPostChange(text);
