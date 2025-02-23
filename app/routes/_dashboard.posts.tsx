@@ -38,6 +38,8 @@ export default function Posts() {
     const data = JSON.parse(dataOrg!);
     setstate(data.feedData);
     setdid(data.profileData.did);
+    setFirstCombobox("Engagement");
+    setSecondCombobox("Highest to Lowest");
   }, []);
   const [state, setstate] = useState<any>();
   const [did, setdid] = useState<string>();
@@ -83,11 +85,13 @@ export default function Posts() {
           list={sortby}
           placeholder="interaction"
           onSelected={setFirstCombobox}
+          defaultSelection="Engagement"
         />
         <Combobox
           list={fromto}
           placeholder="from"
           onSelected={setSecondCombobox}
+          defaultSelection="Highest to Lowest"
         />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
