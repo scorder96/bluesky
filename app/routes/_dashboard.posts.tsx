@@ -172,6 +172,11 @@ export default function Posts() {
                           Repost
                         </span>
                       )}
+                      {post.reply && (
+                        <span className="bg-primary/10 p-1 me-2 rounded">
+                          Reply
+                        </span>
+                      )}
                       {post.post.record.text.slice(0, 70) + "..."}
                     </th>
                     <td className="px-6 py-4">{post.post.replyCount}</td>
