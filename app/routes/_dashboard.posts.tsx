@@ -46,6 +46,7 @@ export default function Posts() {
   const [firstCombobox, setFirstCombobox] = useState(String);
   const [secondCombobox, setSecondCombobox] = useState(String);
   const [showReposts, setShowReposts] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
   // var data = useLoaderData<typeof loader>();
   // var data = object;
   // const { feed: postsArray, cursor: nextPage } = data;
@@ -100,6 +101,13 @@ export default function Posts() {
           id="showReposts"
           onClick={() => setShowReposts(!showReposts)}
         />
+        <Label htmlFor="showReplies" className="ps-4">
+          Show replies
+        </Label>
+        <Checkbox
+          id="showReplies"
+          onClick={() => setShowReplies(!showReplies)}
+        />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -126,19 +134,29 @@ export default function Posts() {
             const url = `https://bsky.app/profile/${
               post.post.author.did
             }/post/${post.post.uri.slice(post.post.uri.lastIndexOf("/") + 1)}`;
-            var show = false;
+            var show1 = false;
+            var show2 = false;
             if (post.reason) {
               if (showReposts) {
-                show = true;
+                show1 = true;
               } else {
-                show = false;
+                show1 = false;
               }
             } else {
-              show = true;
+              show1 = true;
+            }
+            if (post.reply) {
+              if (showReplies) {
+                show2 = true;
+              } else {
+                show2 = false;
+              }
+            } else {
+              show2 = true;
             }
             return (
               <>
-                {show && (
+                {show1 && show2 && (
                   <tr
                     key={index}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-neutral-100 cursor-pointer"
