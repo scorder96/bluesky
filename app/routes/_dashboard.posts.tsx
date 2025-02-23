@@ -2,6 +2,8 @@ import { useParams, useRouteError } from "@remix-run/react";
 import { Heart, MessageSquare, Quote, Repeat } from "lucide-react";
 import { useEffect, useState } from "react";
 import Combobox from "~/components/Combobox";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { fromto, sortby } from "~/data/combobox";
 import useSort from "~/hooks/useSort";
 
@@ -37,19 +39,17 @@ export default function Posts() {
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
     setstate(data.feedData);
-    setdid(data.profileData.did);
     setFirstCombobox("Engagement");
     setSecondCombobox("Highest to Lowest");
   }, []);
   const [state, setstate] = useState<any>();
-  const [did, setdid] = useState<string>();
   const [firstCombobox, setFirstCombobox] = useState(String);
   const [secondCombobox, setSecondCombobox] = useState(String);
+  const [showReposts, setShowReposts] = useState(false);
   // var data = useLoaderData<typeof loader>();
   // var data = object;
   // const { feed: postsArray, cursor: nextPage } = data;
 
-  const params = useParams();
   const sort = useSort();
   var sorted = state;
   if (firstCombobox && secondCombobox) {
@@ -79,8 +79,8 @@ export default function Posts() {
 
   return (
     <div className="col-span-6 md:col-span-5 relative overflow-x-auto">
-      <div className="px-6 py-4 space-x-2">
-        <span>Sort by</span>
+      <div className="px-6 py-4 space-x-2 flex items-center">
+        <Label>Sort by</Label>
         <Combobox
           list={sortby}
           placeholder="interaction"
@@ -92,6 +92,13 @@ export default function Posts() {
           placeholder="from"
           onSelected={setSecondCombobox}
           defaultSelection="Highest to Lowest"
+        />
+        <Label htmlFor="showReposts" className="ps-4">
+          Show reposts
+        </Label>
+        <Checkbox
+          id="showReposts"
+          onClick={() => setShowReposts(!showReposts)}
         />
       </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -116,27 +123,46 @@ export default function Posts() {
         </thead>
         <tbody>
           {sorted?.map((post: any, index: number) => {
-            const url = `https://bsky.app/profile/${did}/post/${post.post.uri.slice(
-              post.post.uri.lastIndexOf("/") + 1
-            )}`;
+            const url = `https://bsky.app/profile/${
+              post.post.author.did
+            }/post/${post.post.uri.slice(post.post.uri.lastIndexOf("/") + 1)}`;
+            var show = false;
+            if (post.reason) {
+              if (showReposts) {
+                show = true;
+              } else {
+                show = false;
+              }
+            } else {
+              show = true;
+            }
             return (
-              <tr
-                key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-neutral-100 cursor-pointer"
-                onClick={() => window.open(url)}
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {/* @ts-ignore */}
-                  {post.post.record.text.slice(0, 70) + "..."}
-                </th>
-                <td className="px-6 py-4">{post.post.replyCount}</td>
-                <td className="px-6 py-4">{post.post.repostCount}</td>
-                <td className="px-6 py-4">{post.post.quoteCount}</td>
-                <td className="px-6 py-4">{post.post.likeCount}</td>
-              </tr>
+              <>
+                {show && (
+                  <tr
+                    key={index}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-neutral-100 cursor-pointer"
+                    onClick={() => window.open(url)}
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {/* @ts-ignore */}
+                      {post.reason && (
+                        <span className="bg-primary/10 p-1 me-2 rounded">
+                          Repost
+                        </span>
+                      )}
+                      {post.post.record.text.slice(0, 70) + "..."}
+                    </th>
+                    <td className="px-6 py-4">{post.post.replyCount}</td>
+                    <td className="px-6 py-4">{post.post.repostCount}</td>
+                    <td className="px-6 py-4">{post.post.quoteCount}</td>
+                    <td className="px-6 py-4">{post.post.likeCount}</td>
+                  </tr>
+                )}
+              </>
             );
           })}
         </tbody>
