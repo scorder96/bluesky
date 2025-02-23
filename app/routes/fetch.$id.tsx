@@ -28,19 +28,21 @@ export async function loader({ params }: LoaderFunctionArgs) {
   var dateArray = [];
   for (let i = 0; i < postData.feed.length; i++) {
     posts++;
-    tReplies += postData.feed[i].post.replyCount!;
-    tReposts += postData.feed[i].post.repostCount!;
-    tQuotes += postData.feed[i].post.quoteCount!;
-    tLikes += postData.feed[i].post.likeCount!;
-    // @ts-ignore
-    const timestamp = postData.feed[i].post.record.createdAt;
-    const date = new Date(timestamp);
-    const todaydate = new Date();
-    if (
-      date.getFullYear() == todaydate.getFullYear() &&
-      date.getMonth() == todaydate.getMonth()
-    ) {
-      dateArray[i] = date.getDate();
+    if (!postData.feed[i].reason) {
+      tReplies += postData.feed[i].post.replyCount!;
+      tReposts += postData.feed[i].post.repostCount!;
+      tQuotes += postData.feed[i].post.quoteCount!;
+      tLikes += postData.feed[i].post.likeCount!;
+      // @ts-ignore
+      const timestamp = postData.feed[i].post.record.createdAt;
+      const date = new Date(timestamp);
+      const todaydate = new Date();
+      if (
+        date.getFullYear() == todaydate.getFullYear() &&
+        date.getMonth() == todaydate.getMonth()
+      ) {
+        dateArray[i] = date.getDate();
+      }
     }
   }
   const feedData = postData.feed;
