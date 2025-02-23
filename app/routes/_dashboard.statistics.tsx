@@ -182,11 +182,14 @@ export default function Statistics() {
         </div>
       </div>
       <div className="md:w-1/2">
-        <div className="mb-2 font-bold flex justify-between mt-8">
-          <h1>Consistency</h1>
+        <div className="mb-2 flex justify-between mt-8">
+          <h1 className="font-bold">Consistency</h1>
           <div className="flex items-center">
-            <span>{streak}</span>
-            <Flame size={16} color="orange" className="ms-2" />
+            <Flame size={16} color="orange" className="me-2" />
+            <div>
+              <span className="font-bold">{streak}&nbsp;</span>
+              <span className="text-xs opacity-50">day streak</span>
+            </div>
           </div>
         </div>
         <ContributionTracker dateArray={state?.dateArray} />
