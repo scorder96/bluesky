@@ -29,15 +29,36 @@ export function ErrorBoundary() {
 }
 export default function Statistics() {
   const [state, setstate] = useState<any>();
+  const [ReplyCount, setReplyCount] = useState(Number);
+  const [RepostCount, setRepostCount] = useState(Number);
+  const [QuoteCount, setQuoteCount] = useState(Number);
+  const [LikeCount, setLikeCount] = useState(Number);
   useEffect(() => {
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
     setstate(data);
+    for (let i = 0; i < data.feedData.length; i++) {
+      const post = data.feedData[i].post;
+      if (!data.feedData[i].reason) {
+        replyCount += post.replyCount;
+        repostCount += post.repostCount;
+        quoteCount += post.quoteCount;
+        likeCount += post.likeCount;
+      }
+    }
+    setReplyCount(replyCount);
+    setRepostCount(repostCount);
+    setQuoteCount(quoteCount);
+    setLikeCount(likeCount);
     generateChart(properties[0], data);
   }, []);
+  var replyCount = 0;
+  var repostCount = 0;
+  var quoteCount = 0;
+  var likeCount = 0;
+
   const [Loading, setLoading] = useState(false);
   // const data = useLoaderData<typeof loader>();
-  const params = useParams();
   // const globalState = useGlobalState();
   const date = new Date();
   var today = date.getDate();
@@ -61,13 +82,17 @@ export default function Statistics() {
   }
 
   const [chartData, setChartData] = useState(Array<object>);
-  // var chartData: Array<object> = [];
+
   async function generateChart(value: String, data?: any) {
     setLoading(true);
     const handle = state ? state.profileData.handle : data.profileData.handle;
     const tempchartData = [];
+
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const filter = `handle = "${handle}" && created > "${sevenDaysAgo.toISOString()}"`;
     const resultList = await pb.collection("tracker").getList(1, 7, {
-      filter: `handle="${handle}"`,
+      filter: filter,
       sort: "created",
     });
 
@@ -132,28 +157,28 @@ export default function Statistics() {
             <MessageSquare size={16} className="me-2 opacity-50" />
             <span className="text-sm opacity-50">Replies</span>
           </div>
-          <b>{state?.tReplies}</b>
+          <b>{ReplyCount}</b>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Repeat size={16} className="me-2 opacity-50" />
             <span className="text-sm opacity-50">Reposts</span>
           </div>
-          <b>{state?.tReposts}</b>
+          <b>{RepostCount}</b>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Quote size={16} className="me-2 opacity-50" />
             <span className="text-sm opacity-50">Quotes</span>
           </div>
-          <b>{state?.tQuotes}</b>
+          <b>{QuoteCount}</b>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Heart size={16} className="me-2 opacity-50" />
             <span className="text-sm opacity-50">Likes</span>
           </div>
-          <b>{state?.tLikes}</b>
+          <b>{LikeCount}</b>
         </div>
       </div>
       <div className="md:w-1/2">
