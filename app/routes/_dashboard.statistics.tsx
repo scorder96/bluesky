@@ -195,7 +195,10 @@ export default function Statistics() {
         ) : (
           <p>
             You don't see much growth data since we haven't been tracking.{" "}
-            <Link to={"/sign-up"} className="font-bold text-primary">
+            <Link
+              to={"/sign-up?redirectTo=/statistics"}
+              className="font-bold text-primary"
+            >
               Sign up
             </Link>{" "}
             to start tracking growth data.

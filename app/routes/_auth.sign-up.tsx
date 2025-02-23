@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@remix-run/react";
+import { Link, useNavigate, useSearchParams } from "@remix-run/react";
 import { FormEvent, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -35,6 +35,9 @@ export default function SignUp() {
   const [Error, setError] = useState("");
   const [Loading, setLoading] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirectTo");
+
   async function signUp(event: FormEvent) {
     setError("");
     setLoading(true);
@@ -67,7 +70,11 @@ export default function SignUp() {
       .authWithOAuth2({ provider: "google" })
       .catch((err) => console.log(err.message));
     if (pb.authStore.isValid) {
-      navigate("/");
+      if (redirect) {
+        navigate(redirect);
+      } else {
+        navigate("/account");
+      }
     }
     setLoading(false);
   }
