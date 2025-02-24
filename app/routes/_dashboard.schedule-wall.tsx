@@ -7,20 +7,39 @@ import pb from "~/pocketbase";
 export default function ScheduleWall() {
   useEffect(() => {
     if (pb.authStore.isValid) {
-      const dataOrg = localStorage.getItem("ALLDATA");
-      const data = JSON.parse(dataOrg!);
-      checkPassword(data.profileData.handle);
+      checkPassword();
     }
   }, []);
   const navigate = useNavigate();
-  async function checkPassword(handle: string) {
+
+  async function checkPassword() {
+    const dataOrg = localStorage.getItem("ALLDATA");
+    const data = JSON.parse(dataOrg!);
     const record = await pb
       .collection("profiles")
-      .getFirstListItem(`handle="${handle}"`);
-    if (record.password) {
-      navigate("/schedule");
-    } else {
-      navigate("/bsky-login/" + record.id);
+      .getFirstListItem(`handle="${data.profileData.handle}"`)
+      .then((record) => {
+        if (record.password) {
+          navigate("/schedule");
+        } else {
+          navigate("/bsky-login/" + record.id);
+        }
+      })
+      .catch(() => {
+        upload();
+      });
+  }
+  async function upload() {
+    const dataOrg = localStorage.getItem("ALLDATA");
+    const data = JSON.parse(dataOrg!);
+    const pbProfileData = {
+      user: pb.authStore.record?.id,
+      handle: data.profileData.handle,
+      did: data.profileData.did,
+    };
+    const recordProfile = await pb.collection("profiles").create(pbProfileData);
+    if (recordProfile) {
+      navigate("/bsky-login/" + recordProfile.id);
     }
   }
   return (
