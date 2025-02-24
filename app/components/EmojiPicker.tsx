@@ -86,7 +86,7 @@ export default function EmojiPicker({ onSelection }: Props) {
           <Flag />
         </div>
       </div>
-      <div className="bg-white w-96 overflow-auto h-48">
+      <div className="bg-white w-96 overflow-auto h-48 grid grid-cols-12 px-2">
         {Category == 0 &&
           smilesemotions.map((subcategory) => {
             return subcategory.map((emoji) => {

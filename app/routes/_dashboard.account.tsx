@@ -8,10 +8,12 @@ export default function Account() {
   const navigate = useNavigate();
   const [Support, setSupport] = useState(false);
   return (
-    <div className="col-span-5 flex flex-col justify-center items-center">
+    <div className="col-span-6 md:col-span-5 flex flex-col justify-center items-center">
       {pb.authStore.isValid ? (
         <>
-          You are logged in as <b>{pb.authStore.record?.email}</b>
+          <p>
+            You are logged in as <b>{pb.authStore.record?.email}</b>
+          </p>
           <div className="space-x-4 flex items-center mt-8">
             <Button
               variant={"destructive"}

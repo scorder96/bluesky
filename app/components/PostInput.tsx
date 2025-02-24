@@ -126,7 +126,7 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
     <div>
       {/* Input Field */}
       <textarea
-        className="w-full h-24 outline-none"
+        className="w-full h-24 outline-none bg-white"
         placeholder="What's happening?"
         value={post}
         onChange={(e) => handleChange(e.target.value)}

@@ -92,7 +92,7 @@ export default function Schedule() {
       {Loading ? (
         <Loader2 className="animate-spin mx-auto my-auto text-primary" />
       ) : (
-        <div className="grid grid-cols-7 grid-rows-4 mt-4 mb-8 md:mb-8 grow auto-rows-fr">
+        <div className="grid grid-cols-7 grid-rows-4 mt-4 mb-8 auto-rows-fr">
           {dateList.map((day, index) => {
             // const scheduledToday = ScheduleDate.filter((item) => item === day);
             const filterOperation = filter(day);
@@ -127,7 +127,7 @@ export default function Schedule() {
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-24 md:mb-0">
+      <div className="flex justify-between items-center">
         <div className="space-x-2">
           <Button
             variant={"outline"}

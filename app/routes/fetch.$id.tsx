@@ -173,7 +173,7 @@ export default function Root() {
     navigate("/profile");
   }
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
+    <div className="h-dvh flex flex-col justify-center items-center">
       <p>Fetching your data</p>
       <Loader2 className="animate-spin mt-4" color="#3b82f6" />
       <p className="opacity-50 mt-4">This can take a few minutes</p>

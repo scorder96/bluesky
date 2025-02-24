@@ -109,7 +109,7 @@ export default function Index() {
           <h2>Account</h2>
         </Link>
       </nav>
-      <div className="flex flex-col items-center text-center h-screen pt-32">
+      <div className="flex flex-col items-center text-center h-dvh pt-32 px-8">
         <Link to={"https://bsky.app/profile/sleekdash.xyz"} target="_blank">
           <button
             type="button"

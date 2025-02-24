@@ -34,57 +34,59 @@ export default function Dashboard() {
     }
   });
   return (
-    <div className="h-screen grid grid-cols-6">
-      <aside className="border-r flex-col justify-between hidden md:flex">
-        <ul className="mt-8">
-          <Link to={"/"}>
-            <h1 className="text-xl text-center mb-16">
-              <span className="text-primary">Bsky</span> <br />
-              <span className="text-2xl">SleekDash</span>
-            </h1>
-          </Link>
-          {sidebar.map((option, index) => {
-            const active = location.pathname.includes(option.activeLink);
-            return (
-              <li
-                key={index}
-                className={
-                  "flex items-center py-4 ps-8 cursor-pointer " +
-                  (active
-                    ? "bg-primary hover:bg-primary text-white"
-                    : "hover:bg-neutral-100")
-                }
-                onClick={() => navigate(option.route)}
-              >
-                {index == 0 && <User size={16} className="me-2" />}
-                {index == 1 && <ChartLine size={16} className="me-2" />}
-                {index == 2 && <StickyNote size={16} className="me-2" />}
-                {index == 3 && <Calendar size={16} className="me-2" />}
-                {option.name}
-              </li>
-            );
-          })}
-        </ul>
-        <div
-          className={
-            "flex items-center py-4 ps-8 cursor-pointer " +
-            (location.pathname.includes("/account")
-              ? "bg-primary hover:bg-primary text-white"
-              : "hover:bg-neutral-100")
-          }
-          onClick={() => navigate("/account")}
-        >
-          <UserCircle size={16} className="me-2" /> Account
-        </div>
-      </aside>
-      {navigation.state == "loading" ? (
-        <div className="col-span-6 md:col-span-5 flex justify-center items-center">
-          <Loader2 className="animate-spin text-primary" />
-        </div>
-      ) : (
-        <Outlet />
-      )}
-      <nav className="fixed bottom-0 bg-white border-t w-full flex md:hidden">
+    <>
+      <div className="grid grid-cols-6 h-dvh mb-20">
+        <aside className="border-r flex-col justify-between hidden md:flex">
+          <ul className="mt-8">
+            <Link to={"/"}>
+              <h1 className="text-xl text-center mb-16">
+                <span className="text-primary">Bsky</span> <br />
+                <span className="text-2xl">SleekDash</span>
+              </h1>
+            </Link>
+            {sidebar.map((option, index) => {
+              const active = location.pathname.includes(option.activeLink);
+              return (
+                <li
+                  key={index}
+                  className={
+                    "flex items-center py-4 ps-8 cursor-pointer " +
+                    (active
+                      ? "bg-primary hover:bg-primary text-white"
+                      : "hover:bg-neutral-100")
+                  }
+                  onClick={() => navigate(option.route)}
+                >
+                  {index == 0 && <User size={16} className="me-2" />}
+                  {index == 1 && <ChartLine size={16} className="me-2" />}
+                  {index == 2 && <StickyNote size={16} className="me-2" />}
+                  {index == 3 && <Calendar size={16} className="me-2" />}
+                  {option.name}
+                </li>
+              );
+            })}
+          </ul>
+          <div
+            className={
+              "flex items-center py-4 ps-8 cursor-pointer " +
+              (location.pathname.includes("/account")
+                ? "bg-primary hover:bg-primary text-white"
+                : "hover:bg-neutral-100")
+            }
+            onClick={() => navigate("/account")}
+          >
+            <UserCircle size={16} className="me-2" /> Account
+          </div>
+        </aside>
+        {navigation.state == "loading" ? (
+          <div className="col-span-6 md:col-span-5 flex justify-center items-center">
+            <Loader2 className="animate-spin text-primary" />
+          </div>
+        ) : (
+          <Outlet />
+        )}
+      </div>
+      <nav className="fixed w-full bottom-0 h-20 bg-white border-t flex md:hidden">
         {sidebar.map((option, index) => {
           const active = location.pathname.includes(option.activeLink);
           return (
@@ -126,6 +128,6 @@ export default function Dashboard() {
           );
         })}
       </nav>
-    </div>
+    </>
   );
 }
