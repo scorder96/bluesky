@@ -57,11 +57,13 @@ export default function Statistics() {
   var quoteCount = 0;
   var likeCount = 0;
 
+  const [DataValue, setDataValue] = useState("Followers");
   const [Loading, setLoading] = useState(false);
   // const data = useLoaderData<typeof loader>();
   // const globalState = useGlobalState();
   const date = new Date();
   var today = date.getDate();
+  var variableToday = today;
   var streak = 0;
   // const data = {
   //   dateArray: [8, 9],
@@ -73,18 +75,26 @@ export default function Statistics() {
   // };
 
   while (today != 0) {
-    if (state?.dateArray.includes(today)) {
+    if (state?.dateArray.includes(variableToday)) {
       streak++;
     } else {
       break;
     }
-    today--;
+    variableToday--;
+  }
+
+  if (
+    !state?.dateArray.includes(today) &&
+    state?.dateArray.includes(today - 1)
+  ) {
+    streak++;
   }
 
   const [chartData, setChartData] = useState(Array<object>);
 
-  async function generateChart(value: String, data?: any) {
+  async function generateChart(value: string, data?: any) {
     setLoading(true);
+    setDataValue(value);
     const handle = state ? state.profileData.handle : data.profileData.handle;
     const tempchartData = [];
 
@@ -207,7 +217,7 @@ export default function Statistics() {
         {Loading ? (
           <Loader2 className="animate-spin text-primary" />
         ) : (
-          <LineChartComponent chartData={chartData} />
+          <LineChartComponent chartData={chartData} dataKey={DataValue} />
         )}
       </div>
       {/* {chartData.length == 0 && (
