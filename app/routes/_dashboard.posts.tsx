@@ -134,29 +134,19 @@ export default function Posts() {
             const url = `https://bsky.app/profile/${
               post.post.author.did
             }/post/${post.post.uri.slice(post.post.uri.lastIndexOf("/") + 1)}`;
-            var show1 = false;
-            var show2 = false;
-            if (post.reason) {
-              if (showReposts) {
-                show1 = true;
-              } else {
-                show1 = false;
-              }
-            } else {
-              show1 = true;
-            }
-            if (post.reply) {
-              if (showReplies) {
-                show2 = true;
-              } else {
-                show2 = false;
-              }
-            } else {
-              show2 = true;
-            }
+
+            const hasReason = post.reason;
+            const hasReply = post.reply;
+
+            // Determine visibility based on states
+            const shouldShow =
+              (hasReason && hasReply && showReposts) || // Show only if showReason is true when both exist
+              (hasReason && showReposts) || // Show if it has reason and showReason is true
+              (hasReply && !hasReason && showReplies) || // Show if it has reply but no reason and showReply is true
+              (!hasReason && !hasReply); // Show if neither exist
             return (
               <>
-                {show1 && show2 && (
+                {shouldShow && (
                   <tr
                     key={index}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-neutral-100 cursor-pointer"
@@ -172,7 +162,7 @@ export default function Posts() {
                           Repost
                         </span>
                       )}
-                      {post.reply && (
+                      {post.reply && !post.reason && (
                         <span className="bg-primary/10 p-1 me-2 rounded">
                           Reply
                         </span>
