@@ -58,9 +58,9 @@ export default function Dashboard() {
                   onClick={() => navigate(option.route)}
                 >
                   {index == 0 && <User size={16} className="me-2" />}
-                  {index == 1 && <ChartLine size={16} className="me-2" />}
-                  {index == 2 && <StickyNote size={16} className="me-2" />}
-                  {index == 3 && <Calendar size={16} className="me-2" />}
+                  {index == 1 && <Calendar size={16} className="me-2" />}
+                  {index == 2 && <ChartLine size={16} className="me-2" />}
+                  {index == 3 && <StickyNote size={16} className="me-2" />}
                   {option.name}
                 </li>
               );
@@ -103,25 +103,25 @@ export default function Dashboard() {
               {index == 0 && (
                 <div className="flex flex-col items-center text-sm">
                   <User size={32} />
-                  Profile
+                  {option.name}
                 </div>
               )}
               {index == 1 && (
                 <div className="flex flex-col items-center text-sm">
-                  <ChartLine size={32} />
-                  Statistics
+                  <Calendar size={32} />
+                  {option.name}
                 </div>
               )}
               {index == 2 && (
                 <div className="flex flex-col items-center text-sm">
-                  <StickyNote size={32} />
-                  Posts
+                  <ChartLine size={32} />
+                  {option.name}
                 </div>
               )}
               {index == 3 && (
                 <div className="flex flex-col items-center text-sm">
-                  <Calendar size={32} />
-                  Schedule
+                  <StickyNote size={32} />
+                  {option.name}
                 </div>
               )}
             </li>
