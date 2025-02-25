@@ -25,8 +25,12 @@ export default function Schedule() {
     const date = new Date();
     const today = date.getDate();
     var classString = "";
-    if (!thismonthList[index]) {
-      classString = "border-none opacity-50";
+    if (
+      !thismonthList[index] ||
+      (day < today && Month == date.getMonth()) ||
+      Month < date.getMonth()
+    ) {
+      classString = "border-2 opacity-40 bg-neutral-200";
       return classString;
     }
     if (day == today && Month == date.getMonth()) {
@@ -81,6 +85,8 @@ export default function Schedule() {
     }
     return { scheduleDate, scheduleTime, posts, scheduleIDs };
   }
+  const date = new Date();
+  const currentMonth = date.getMonth();
 
   return (
     <div className="col-span-6 md:col-span-5 p-8 flex flex-col">
@@ -97,31 +103,55 @@ export default function Schedule() {
             // const scheduledToday = ScheduleDate.filter((item) => item === day);
             const filterOperation = filter(day);
             const noOfPosts = filterOperation.scheduleDate.length;
+            const date = new Date();
+            const today = date.getDate();
+            const nonSchedulableDay =
+              !thismonthList[index] ||
+              (day < today && Month == date.getMonth()) ||
+              Month < date.getMonth();
+
             return (
-              <ScheduleSheet
-                key={index}
-                month={Month}
-                day={day}
-                scheduledDates={filterOperation.scheduleDate}
-                scheduledTimes={filterOperation.scheduleTime}
-                posts={filterOperation.posts}
-                recordids={filterOperation.scheduleIDs}
-                onClose={getSchedule}
-              >
-                <div
-                  className={
-                    "h-full text-left border p-2 hover:bg-neutral-100 " +
-                    gridStyler(day, index)
-                  }
-                >
-                  {day}
-                  {noOfPosts > 0 && thismonthList[index] && (
-                    <div className="flex justify-center items-center text-primary font-bold text-xl">
-                      {noOfPosts} <Clock size={20} className="ms-1" />
+              <>
+                {!nonSchedulableDay ? (
+                  <ScheduleSheet
+                    key={index}
+                    month={Month}
+                    day={day}
+                    scheduledDates={filterOperation.scheduleDate}
+                    scheduledTimes={filterOperation.scheduleTime}
+                    posts={filterOperation.posts}
+                    recordids={filterOperation.scheduleIDs}
+                    onClose={getSchedule}
+                  >
+                    <div
+                      className={
+                        "h-full text-left border p-2 hover:border-primary " +
+                        gridStyler(day, index)
+                      }
+                    >
+                      {day}
+                      {noOfPosts > 0 && thismonthList[index] && (
+                        <div className="flex justify-center items-center text-primary font-bold text-xl">
+                          {noOfPosts} <Clock size={20} className="ms-1" />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </ScheduleSheet>
+                  </ScheduleSheet>
+                ) : (
+                  <div
+                    className={
+                      "h-full text-left border p-2 " + gridStyler(day, index)
+                    }
+                  >
+                    {day}
+                    {noOfPosts > 0 && thismonthList[index] && (
+                      <div className="flex justify-center items-center text-primary font-bold text-xl">
+                        {noOfPosts} <Clock size={20} className="ms-1" />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
             );
           })}
         </div>
@@ -133,7 +163,7 @@ export default function Schedule() {
             variant={"outline"}
             size={"icon"}
             onClick={() => setMonth(Month - 1)}
-            disabled={Month == 0}
+            disabled={Month <= currentMonth}
           >
             <ChevronLeft />
           </Button>
