@@ -35,7 +35,7 @@ export default function Dashboard() {
   });
   return (
     <>
-      <div className="grid grid-cols-6 h-dvh mb-20">
+      <div className="grid grid-cols-6 h-dvh mb-20 md:mb-0">
         <aside className="border-r flex-col justify-between hidden md:flex">
           <ul className="mt-8">
             <Link to={"/"}>
