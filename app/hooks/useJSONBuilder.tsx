@@ -1,6 +1,7 @@
 export default async function jsonBuilder(
   postText: string,
-  webEmbed: { title: string; description: string }
+  webEmbed: { title: string; description: string },
+  imageJson: any
 ) {
   const splittedPost = postText.split(/\s/);
   const urlRegex =
@@ -77,6 +78,9 @@ export default async function jsonBuilder(
     bytestart += new Blob([splittedPost[i]]).size + 1;
   }
 
+  if (imageJson && !imageJson.never) {
+    defaultJson.embed = imageJson;
+  }
   defaultJson.facets = facets;
   return defaultJson;
 }

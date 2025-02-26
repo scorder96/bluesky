@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import EmojiPicker from "./EmojiPicker";
+import EmbedWeb from "./EmbedWeb";
+import EmbedImage from "./EmbedImage";
 // import PostQuote from "./PostQuote";
 // import ReplyTo from "./ReplyTo";
 
@@ -17,14 +19,25 @@ interface Props {
   onPostChange: (text: string) => void;
   post: string;
   onWebEmbed: (title: string, description: string) => void;
+  onImageEmbed: (json: any) => void;
 }
 
-export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
+export default function PostInput({
+  onPostChange,
+  post,
+  onWebEmbed,
+  onImageEmbed,
+}: Props) {
+  const [ImageEmbed, setImageEmbed] = useState(false);
   useEffect(() => {
     const dataOrg = localStorage.getItem("ALLDATA");
     const data = JSON.parse(dataOrg!);
     setstate(data);
-  }, []);
+    if (ImageEmbed == true) {
+      onWebEmbed("no-embed", "no-embed");
+      setWebEmbed(false);
+    }
+  }, [ImageEmbed]);
   const [state, setstate] = useState<any>();
   const [Emojis, setEmojis] = useState(false);
   // const [Quoting, setQuoting] = useState(false);
@@ -32,6 +45,7 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
   const [WebEmbed, setWebEmbed] = useState(false);
   const [WebEmbedJson, setWebEmbedJson] = useState(Object);
   const [EmbedLoading, setEmbedLoading] = useState(false);
+  const [ImageEmbedFile, setImageEmbedFile] = useState<File>();
   // const [inputText, setInputText] = useState<string>("");
 
   const isWhitespaceChar = (char: string) => {
@@ -91,7 +105,8 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
     input.addEventListener("change", (event) => {
       const target = event.target as HTMLInputElement; // ✅ Cast event.target
       if (target.files && target.files.length > 0) {
-        console.log(target.files[0]); // Pass selected file
+        setImageEmbed(true);
+        setImageEmbedFile(target.files[0]);
       }
     });
     input.click();
@@ -107,7 +122,7 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
   async function handleChange(text: string) {
     onPostChange(text);
     const linkRegex = /https?:\/\/[^\s]+/g;
-    if (linkRegex.test(text)) {
+    if (linkRegex.test(text) && !ImageEmbed) {
       if (isWhitespaceChar(text[text.length - 1])) {
         if (!WebEmbed) {
           setWebEmbed(true);
@@ -148,9 +163,9 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
           >
             <Quote className="text-blue-500" />
           </Button> */}
-          {/* <Button variant="outline" size="icon" onClick={inputImage}>
+          <Button variant="outline" size="icon" onClick={inputImage}>
             <Image className="text-blue-500" />
-          </Button> */}
+          </Button>
         </div>
         <div className="text-sm">
           <span
@@ -183,30 +198,24 @@ export default function PostInput({ onPostChange, post, onWebEmbed }: Props) {
         <div className="text-gray-800 whitespace-pre-wrap col-span-5">
           {highlightText(post)}
           <br />
+          {ImageEmbed && (
+            <EmbedImage
+              file={ImageEmbedFile!}
+              onEmbedJson={onImageEmbed}
+              onRemove={() => {
+                setImageEmbed(false);
+              }}
+            />
+          )}
           {WebEmbed && (
-            <div className="bg-neutral-200 p-2 mt-2">
-              {EmbedLoading ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                <>
-                  <p className="text-sm font-semibold">{WebEmbedJson.title}</p>
-                  <p className="text-xs">
-                    {WebEmbedJson.description?.slice(0, 30) + "..."}
-                  </p>
-                </>
-              )}
-              <Button
-                variant="outline"
-                size={"sm"}
-                className="mt-2"
-                onClick={() => {
-                  onWebEmbed("no-embed", "no-embed");
-                  setWebEmbed(false);
-                }}
-              >
-                Remove Embed
-              </Button>
-            </div>
+            <EmbedWeb
+              loading={EmbedLoading}
+              embedJson={WebEmbedJson}
+              onRemoveEmbed={() => {
+                onWebEmbed("no-embed", "no-embed");
+                setWebEmbed(false);
+              }}
+            />
           )}
         </div>
       </div>

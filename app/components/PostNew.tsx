@@ -23,6 +23,7 @@ export function PostNew({ onScheduled }: Props) {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [Time, setTime] = useState("09:00");
   const [WebEmbed, setWebEmbed] = useState(Object);
+  const [UploadedImage, setUploadedImage] = useState<JSON>();
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(String);
   const today = new Date();
@@ -64,8 +65,7 @@ export function PostNew({ onScheduled }: Props) {
       .collection("profiles")
       .getFirstListItem(`handle="${localData.profileData.handle}"`);
 
-    const postJSON = await useJSONBuilder(Post, WebEmbed);
-
+    const postJSON = await useJSONBuilder(Post, WebEmbed, UploadedImage!);
     const data = {
       profile: profileRecord.id,
       post: postJSON,
@@ -87,7 +87,7 @@ export function PostNew({ onScheduled }: Props) {
           <Edit /> New Post
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Schedule a post</DialogTitle>
         </DialogHeader>
@@ -97,6 +97,7 @@ export function PostNew({ onScheduled }: Props) {
           onWebEmbed={(title: string, desc: string) =>
             setWebEmbed({ title: title, description: desc })
           }
+          onImageEmbed={setUploadedImage}
         />
         {/* <div
           ref={divRef}
