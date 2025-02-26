@@ -53,7 +53,7 @@ export default function ScheduleSheet({
   }
   return (
     <Sheet onOpenChange={checkCloseBehaviour}>
-      <SheetTrigger>{children}</SheetTrigger>
+      <SheetTrigger className="w-full h-full">{children}</SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>{date.toDateString()}</SheetTitle>
