@@ -98,7 +98,7 @@ export default function Schedule() {
       {Loading ? (
         <Loader2 className="animate-spin mx-auto my-auto text-primary" />
       ) : (
-        <div className="grid grid-cols-7 grid-rows-4 mt-4 mb-8 md:grow auto-rows-fr">
+        <div className="h-96 grid grid-cols-7 mt-4 mb-8 md:grow auto-rows-fr">
           {dateList.map((day, index) => {
             // const scheduledToday = ScheduleDate.filter((item) => item === day);
             const filterOperation = filter(day);
