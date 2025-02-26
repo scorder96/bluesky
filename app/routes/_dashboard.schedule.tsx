@@ -111,10 +111,9 @@ export default function Schedule() {
               Month < date.getMonth();
 
             return (
-              <>
+              <div key={index}>
                 {!nonSchedulableDay ? (
                   <ScheduleSheet
-                    key={index}
                     month={Month}
                     day={day}
                     scheduledDates={filterOperation.scheduleDate}
@@ -151,7 +150,7 @@ export default function Schedule() {
                     )}
                   </div>
                 )}
-              </>
+              </div>
             );
           })}
         </div>
