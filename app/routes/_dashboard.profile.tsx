@@ -59,6 +59,7 @@ export default function Profile() {
   }, []);
   const [state, setstate] = useState<any>();
   const [ProDialog, setProDialog] = useState(false);
+  const navigate = useNavigate();
   // const data = {
   //   displayName: "scorder",
   //   handle: "scorder.bsky.social",
@@ -114,7 +115,10 @@ export default function Profile() {
       <Combobox
         list={["+ Add profile"]}
         placeholder="switch profile"
-        onSelected={() => setProDialog(true)}
+        // onSelected={() => setProDialog(true)}
+        onSelected={() => {
+          navigate("/pricing");
+        }}
       />
       {ProDialog && <Pro />}
     </div>

@@ -10,12 +10,14 @@ import {
 import {
   Calendar,
   ChartLine,
+  Check,
   Loader2,
   StickyNote,
   User,
   UserCircle,
 } from "lucide-react";
 import { useEffect } from "react";
+import { Button } from "~/components/ui/button";
 import { sidebar } from "~/data/sidebar";
 
 export const meta: MetaFunction = () => {
@@ -66,6 +68,24 @@ export default function Dashboard() {
               );
             })}
           </ul>
+          <div className="bg-primary/10 px-6 py-4 space-y-2">
+            <h3>
+              <b>Free Account</b>
+            </h3>
+            <ul>
+              <li className="flex items-center">
+                <Check className="text-primary" size={16} />
+                &nbsp;1 profile
+              </li>
+              <li className="flex items-center">
+                <Check className="text-primary" size={16} />
+                &nbsp;3 scheduled posts
+              </li>
+            </ul>
+            <Button asChild>
+              <Link to={"/pricing"}>Upgrade for $9</Link>
+            </Button>
+          </div>
           <div
             className={
               "flex items-center py-4 ps-8 cursor-pointer " +
