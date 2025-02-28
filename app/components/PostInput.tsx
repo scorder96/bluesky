@@ -6,12 +6,15 @@ import {
   Repeat,
   Reply,
   Smile,
+  Sparkles,
   Video,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import EmojiPicker from "./EmojiPicker";
 import EmbedWeb from "./EmbedWeb";
 import EmbedImage from "./EmbedImage";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import useSort from "~/hooks/useSort";
 // import PostQuote from "./PostQuote";
 // import ReplyTo from "./ReplyTo";
 
@@ -46,6 +49,8 @@ export default function PostInput({
   const [WebEmbedJson, setWebEmbedJson] = useState(Object);
   const [EmbedLoading, setEmbedLoading] = useState(false);
   const [ImageEmbedFile, setImageEmbedFile] = useState<File>();
+  const [Generate, setGenerate] = useState(false);
+  const [GeneratedPosts, setGeneratedPosts] = useState<any>();
   // const [inputText, setInputText] = useState<string>("");
 
   const isWhitespaceChar = (char: string) => {
@@ -136,7 +141,44 @@ export default function PostInput({
       setWebEmbed(false);
     }
   }
-
+  async function generatePost() {
+    if (GeneratedPosts) {
+      setGeneratedPosts(undefined);
+      return;
+    }
+    setGenerate(true);
+    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_API_KEY);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      generationConfig: { responseMimeType: "application/json" },
+      systemInstruction:
+        "You write Bluesky posts. I'll give you the profile information and top performing posts. You will generate 3 posts that will get the highest engagement and reach for the profile.",
+    });
+    const dataOrg = localStorage.getItem("ALLDATA");
+    const data = JSON.parse(dataOrg!);
+    const sort = useSort();
+    const sorted = sort.sortEngagement(data.feedData).reverse();
+    const prompt = `Name: "${data.profileData.displayName}" Bio:"${data.profileData.description}" Top performing posts: 1."${sorted[0]}" 2."${sorted[1]}" 3."${sorted[2]}"`;
+    const result = await model.generateContent(prompt);
+    const jsonversion = JSON.parse(result.response.text());
+    setGeneratedPosts(jsonversion.posts);
+    // setGeneratedPosts([
+    //   {
+    //     text: "Just shipped a small but important update to [Product Name] that improves [specific feature].  What small features have made a big difference for you? #IndieHacking #SaaS #SoftwareDev",
+    //     image: null,
+    //   },
+    //   {
+    //     text: "Hit a milestone today! 🎉 [Specific achievement related to 1k MRR goal].  What are your biggest challenges in building a SaaS business? Let's chat! #IndieHacker #SaaSCo #Growth",
+    //     image: null,
+    //   },
+    //   {
+    //     text: "Excited to share I'm attending [Event Name]!  Looking forward to connecting with fellow indie hackers and learning from the best. Who else will be there? #IndieHackers #Networking #SaaSCommunity",
+    //     image: null,
+    //   },
+    // ]);
+    // setGeneratedPosts(undefined);
+    setGenerate(false);
+  }
   return (
     <div>
       {/* Input Field */}
@@ -166,6 +208,17 @@ export default function PostInput({
           <Button variant="outline" size="icon" onClick={inputImage}>
             <Image className="text-blue-500" />
           </Button>
+          <Button variant={"secondary"} onClick={generatePost}>
+            {Generate ? (
+              <>
+                <Loader2 className="animate-spin text-primary" /> Writing
+              </>
+            ) : (
+              <>
+                <Sparkles className="text-primary" /> Write
+              </>
+            )}
+          </Button>
         </div>
         <div className="text-sm">
           <span
@@ -186,6 +239,23 @@ export default function PostInput({
         <EmojiPicker onSelection={(emoji) => onPostChange(post + emoji)} />
       )}
       {/* {Quoting && <PostQuote onChange={setQuotingURL} link={QuotingURL} />} */}
+      {GeneratedPosts && (
+        <div className="absolute shadow bg-white rounded-md p-4">
+          {GeneratedPosts.map((post: any) => {
+            return (
+              <p
+                className="p-2 text-sm hover:bg-neutral-100 cursor-pointer"
+                onClick={() => {
+                  onPostChange(post.text);
+                }}
+              >
+                {post.text}
+              </p>
+            );
+          })}
+        </div>
+      )}
+
       {/* Highlighted Preview */}
       <div className="grid grid-cols-6 space-x-4 mt-2 p-4 shadow rounded-lg">
         <img
