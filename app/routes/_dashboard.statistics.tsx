@@ -78,16 +78,15 @@ export default function Statistics() {
     if (state?.dateArray.includes(variableToday)) {
       streak++;
     } else {
-      break;
+      if (variableToday == today) {
+        if (!state?.dateArray.includes(today - 1)) {
+          break;
+        }
+      } else {
+        break;
+      }
     }
     variableToday--;
-  }
-
-  if (
-    !state?.dateArray.includes(today) &&
-    state?.dateArray.includes(today - 1)
-  ) {
-    streak++;
   }
 
   const [chartData, setChartData] = useState(Array<object>);
