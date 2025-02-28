@@ -97,7 +97,7 @@ export default function Schedule() {
         })}
       </div>
       {Loading ? (
-        <Loader2 className="animate-spin mx-auto my-auto text-primary" />
+        <Loader2 className="animate-spin mx-auto h-96 md:my-auto text-primary" />
       ) : (
         <div className="h-96 grid grid-cols-7 mt-4 mb-8 md:grow auto-rows-fr">
           {dateList.map((day, index) => {
@@ -156,7 +156,6 @@ export default function Schedule() {
           })}
         </div>
       )}
-
       <div className="flex justify-between items-center">
         <div className="flex space-x-4">
           <div className="space-x-2">
@@ -178,12 +177,17 @@ export default function Schedule() {
               <ChevronRight />
             </Button>
           </div>
-          <BestTimes />
+          <div className="hidden md:block">
+            <BestTimes />
+          </div>
         </div>
         {/* <Button variant={"secondary"}>
           <Hash /> Top Hashtags
         </Button> */}
         <PostNew onScheduled={getSchedule} />
+      </div>
+      <div className="md:hidden mt-4">
+        <BestTimes />
       </div>
     </div>
   );
