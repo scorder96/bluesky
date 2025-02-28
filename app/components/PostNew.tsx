@@ -58,7 +58,7 @@ export function PostNew({ onScheduled }: Props) {
     const records = await pb.collection("schedule").getFullList();
     if (records.length >= 3) {
       const record = await pb.collection("payments").getFullList();
-      if (!record) {
+      if (record.length == 0) {
         navigate("/pricing");
         return;
       }
