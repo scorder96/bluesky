@@ -11,9 +11,14 @@ export default function Navbar({ navRef }: Props) {
       className="shadow flex justify-between items-end px-8 py-4"
       ref={navRef}
     >
-      <h1 className="text-xl font-semibold">
-        <Link to={"/"}>Bluestride</Link>
-      </h1>
+      <Link to={"/"} className="flex items-center">
+        <img
+          src="/antennae-blue.svg"
+          alt="bluestride logo"
+          className="h-4 me-2"
+        />
+        <h1 className="text-xl font-semibold">Bluestride</h1>
+      </Link>
       <ul className="flex space-x-4">
         <li>
           <Link to={"/pricing"}>Pricing</Link>
