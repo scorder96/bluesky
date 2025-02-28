@@ -57,8 +57,11 @@ export function PostNew({ onScheduled }: Props) {
 
     const records = await pb.collection("schedule").getFullList();
     if (records.length >= 3) {
-      navigate("/pricing");
-      return;
+      const record = await pb.collection("payments").getFullList();
+      if (!record) {
+        navigate("/pricing");
+        return;
+      }
     }
 
     const dataOrg = localStorage.getItem("ALLDATA");
