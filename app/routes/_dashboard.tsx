@@ -21,7 +21,7 @@ import { Button } from "~/components/ui/button";
 import { sidebar } from "~/data/sidebar";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Bsky SleekDash | Dashboard" }];
+  return [{ title: "Bluestride | Dashboard" }];
 };
 export default function Dashboard() {
   const location = useLocation();
