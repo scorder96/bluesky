@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "@remix-run/react";
 import pb from "~/pocketbase";
@@ -10,6 +10,9 @@ export default function Pricing() {
   async function initiatePayment() {
     setLoading(true);
     if (pb.authStore.isValid) {
+      const record = await pb
+        .collection("payments")
+        .create({ user: pb.authStore.record?.id });
       window.open("https://www.paypal.com/ncp/payment/FHZKNJV7QFV8Q");
     } else {
       navigate("/sign-up");
@@ -42,8 +45,17 @@ export default function Pricing() {
         className="w-full mt-8 mb-4"
         onClick={initiatePayment}
       >
-        Get BlueStride{" "}
-        <img src="antennae.svg" alt="bluestride logo" className="h-3" />
+        {Loading ? (
+          <>
+            <Loader2 className="animate-spin" />
+            Loading
+          </>
+        ) : (
+          <>
+            Get BlueStride{" "}
+            <img src="antennae.svg" alt="bluestride logo" className="h-3" />
+          </>
+        )}
       </Button>
       <p>
         One-time payment, then <u>it's yours forever</u>
