@@ -1,5 +1,6 @@
-import { ChevronLeft, ChevronRight, Clock, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Hash, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import BestTimes from "~/components/BestTimes";
 import { PostNew } from "~/components/PostNew";
 import ScheduleSheet from "~/components/ScheduleSheet";
 import { Button } from "~/components/ui/button";
@@ -157,26 +158,31 @@ export default function Schedule() {
       )}
 
       <div className="flex justify-between items-center">
-        <div className="space-x-2">
-          <Button
-            variant={"outline"}
-            size={"icon"}
-            onClick={() => setMonth(Month - 1)}
-            disabled={Month <= currentMonth}
-          >
-            <ChevronLeft />
-          </Button>
-          <span className="opacity-50">{months[Month]}</span>
-          <Button
-            variant={"outline"}
-            size={"icon"}
-            onClick={() => setMonth(Month + 1)}
-            disabled={Month == 11}
-          >
-            <ChevronRight />
-          </Button>
+        <div className="flex space-x-4">
+          <div className="space-x-2">
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              onClick={() => setMonth(Month - 1)}
+              disabled={Month <= currentMonth}
+            >
+              <ChevronLeft />
+            </Button>
+            <span className="opacity-50">{months[Month]}</span>
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              onClick={() => setMonth(Month + 1)}
+              disabled={Month == 11}
+            >
+              <ChevronRight />
+            </Button>
+          </div>
+          <BestTimes />
         </div>
-
+        {/* <Button variant={"secondary"}>
+          <Hash /> Top Hashtags
+        </Button> */}
         <PostNew onScheduled={getSchedule} />
       </div>
     </div>
