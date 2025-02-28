@@ -52,7 +52,7 @@ export default function Pricing() {
           </>
         ) : (
           <>
-            Get BlueStride{" "}
+            Get Bluestride{" "}
             <img src="antennae.svg" alt="bluestride logo" className="h-3" />
           </>
         )}
