@@ -43,7 +43,7 @@ export default function Dashboard() {
             <Link to={"/"}>
               <h1 className="text-xl text-center mb-16">
                 <span className="text-primary">Bsky</span> <br />
-                <span className="text-2xl">SleekDash</span>
+                <span className="text-2xl">Bluestride</span>
               </h1>
             </Link>
             {sidebar.map((option, index) => {

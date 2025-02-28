@@ -14,6 +14,7 @@ import TimePicker from "./ui/TimePicker";
 import pb from "~/pocketbase";
 import PostInput from "./PostInput";
 import useJSONBuilder from "~/hooks/useJSONBuilder";
+import { useNavigate } from "@remix-run/react";
 
 interface Props {
   onScheduled: () => void;
@@ -27,7 +28,7 @@ export function PostNew({ onScheduled }: Props) {
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(String);
   const today = new Date();
-
+  const navigate = useNavigate();
   // const isWhitespaceChar = (char: string) => {
   //   return (
   //     char === " " ||
@@ -53,6 +54,13 @@ export function PostNew({ onScheduled }: Props) {
       return;
     }
     setLoading(true);
+
+    const records = await pb.collection("schedule").getFullList();
+    if (records.length >= 3) {
+      navigate("/pricing");
+      return;
+    }
+
     const dataOrg = localStorage.getItem("ALLDATA");
     const localData = JSON.parse(dataOrg!);
 
@@ -79,7 +87,6 @@ export function PostNew({ onScheduled }: Props) {
     }
     setLoading(false);
   }
-
   return (
     <Dialog>
       <DialogTrigger asChild>

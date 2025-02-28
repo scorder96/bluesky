@@ -7,22 +7,19 @@ import {
   useActionData,
   useNavigation,
 } from "@remix-run/react";
-import {
-  Calendar,
-  ChartNoAxesColumnIncreasing,
-  Check,
-  Flame,
-  Loader2,
-  TrendingUp,
-} from "lucide-react";
+import { Check, Loader2, Star } from "lucide-react";
+import { useRef } from "react";
 import Footer from "~/components/Footer";
+import Navbar from "~/components/Navbar";
+import Pricing from "~/components/Pricing";
 import Reveal from "~/components/Reveal";
+import ScreenshotShowcase from "~/components/ScreenshotShowcase";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling" },
+    { title: "Bluestride | Bluesky Post Scheduling and Insights" },
     {
       name: "description",
       content:
@@ -30,7 +27,7 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "og:url",
-      content: "https://sleekdash.xyz",
+      content: "https://bluestride.xyz",
     },
     {
       name: "og:type",
@@ -38,7 +35,7 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "og:title",
-      content: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling",
+      content: "Bluestride | Bluesky Post Scheduling and Insights",
     },
     {
       name: "og:description",
@@ -47,7 +44,7 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "og:image",
-      content: "/sleekdash-rectangle.png",
+      content: "/bluestride-rectangle.png",
     },
     {
       name: "twitter:card",
@@ -55,15 +52,15 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "twitter:domain",
-      content: "sleekdash.xyz",
+      content: "bluestride.xyz",
     },
     {
       name: "twitter:url",
-      content: "https://sleekdash.xyz",
+      content: "https://bluestride.xyz",
     },
     {
       name: "twitter:title",
-      content: "Bsky SleekDash | Bluesky Profile Analytics & Scheduling",
+      content: "Bluestride | Bluesky Post Scheduling and Insights",
     },
     {
       name: "twitter:description",
@@ -72,7 +69,7 @@ export const meta: MetaFunction = () => {
     },
     {
       name: "twitter:image",
-      content: "/sleekdash-rectangle.png",
+      content: "/bluestride-rectangle.png",
     },
   ];
 };
@@ -101,16 +98,15 @@ export async function action({ request }: ActionFunctionArgs) {
 export default function Index() {
   const navigation = useNavigation();
   var data = useActionData<typeof action>();
+  const navRef = useRef<HTMLDivElement>(null);
+  function scrollToTop() {
+    navRef.current?.scrollIntoView();
+  }
   return (
     <>
-      <nav className="shadow flex justify-between items-end px-8 py-4">
-        <h1 className="text-xl font-semibold">SleekDash</h1>
-        <Link to={"account"}>
-          <h2>Account</h2>
-        </Link>
-      </nav>
+      <Navbar navRef={navRef} />
       <div className="flex flex-col items-center text-center h-dvh pt-32 px-8">
-        <Link to={"https://bsky.app/profile/sleekdash.xyz"} target="_blank">
+        <Link to={"https://bsky.app/profile/bluestride.xyz"} target="_blank">
           <button
             type="button"
             className="flex items-center bg-gradient-to-br from-slate-700 to-slate-800 text-white p-1 px-3 mb-4 rounded-full"
@@ -126,8 +122,7 @@ export default function Index() {
           </span>
         </h1>
         <h2 className="text-lg mt-4">
-          Insights, Growth Tracking, Post Scheduling and a pinch of Competitive
-          Edge
+          AI-enabled Post Scheduling and Insights
         </h2>
         <Form method="POST" className="mt-8 flex flex-col">
           <div className="flex items-center">
@@ -154,7 +149,46 @@ export default function Index() {
         </Form>
       </div>
       <Reveal>
-        <div className="md:grid md:grid-cols-2 px-8 md:px-32">
+        <div className="px-8 md:px-32 text-center">
+          <h2 className="text-4xl font-bold">No more posting and praying 🙏</h2>
+          <div className="md:grid md:grid-cols-2 mt-16">
+            <div className="text-left">
+              <p>
+                We don't just tell you what works—we make it happen. <br />
+                <br />
+                With data-driven insights and smart scheduling, you'll know
+                exactly when your audience is active and ready to engage. <br />
+                <br />
+                Bluestride enables you to grow scientifically.🚀
+              </p>
+              <p className="mt-8">
+                <span className="bg-primary/10">Bluesky 🤝 Bluestride</span>
+              </p>
+              {/* <div className="border-2 rounded border-primary/30 w-40 mt-2"></div> */}
+            </div>
+            <ScreenshotShowcase imgSrc="scrnsht-1.png" ySpace={20} />
+          </div>
+        </div>
+      </Reveal>
+      <Reveal>
+        <div className="px-8 md:px-32 mt-32 text-center flex flex-col items-center">
+          <div className="flex text-transparent">
+            <Star fill="gold" />
+            <Star fill="gold" />
+            <Star fill="gold" />
+            <Star fill="gold" />
+            <Star fill="gold" />
+          </div>
+          <p className="mt-4 md:px-64">
+            "Since using Bluestride, I've actually started seeing a pattern in
+            what works. My posts are getting way more reach. Honestly, I don't
+            think I could go back to regular posting now."
+          </p>
+          <p className="mt-4 font-bold">Vikrant Dubey on Bluesky</p>
+        </div>
+      </Reveal>
+      <Reveal>
+        <div className="md:grid md:grid-cols-2 px-8 md:px-32 mt-32">
           <div>
             <h2 className="text-4xl font-bold">Statistics that matter.</h2>
             <ul className="[&>li]:flex mt-8 space-y-4">
@@ -176,36 +210,43 @@ export default function Index() {
               </li>
             </ul>
           </div>
-          <img
+          {/* <img
             src="/screenshot-1.png"
             alt="consistency graph screenshot"
             className="mt-16 md:mt-0"
-          />
+          /> */}
+          <ScreenshotShowcase imgSrc="scrnsht-3.png" ySpace={50} />
         </div>
       </Reveal>
       <Reveal>
         <div className="md:grid md:grid-cols-2 px-8 md:px-32 mt-32">
-          <img
+          {/* <img
             src="/screenshot-2.png"
             alt="post scheduling screenshot"
             className="hidden md:block"
-          />
+          /> */}
+          <div className="hidden md:block">
+            <ScreenshotShowcase imgSrc="scrnsht-2.png" ySpace={20} />
+          </div>
           <div className="md:ps-32">
             <h2 className="text-4xl font-bold">Tools for growth.</h2>
             <p className="mt-8">
-              Schedule upto an year worth of posts to keep up your consistency
-              and grow on auto-pilot. ✈️
+              Schedule unlimited of posts to keep up your consistency and grow
+              on auto-pilot. ✈️
             </p>
-            <p className="mt-4">We will manage the rest.</p>
+            <p className="mt-4">🤖 AI will write them for you.</p>
           </div>
-          <img
+          {/* <img
             src="/screenshot-2.png"
             alt="post scheduling screenshot"
             className="md:hidden mt-16"
-          />
+          /> */}
+          <div className="md:hidden">
+            <ScreenshotShowcase imgSrc="scrnsht-2.png" ySpace={20} />
+          </div>
         </div>
       </Reveal>
-      <Reveal>
+      {/* <Reveal>
         <div className="grid md:grid-cols-4 gap-4 px-8 md:px-32 mt-32">
           <div className="border-2 border-primary rounded-md flex justify-between hover:shadow-lg p-4">
             <h3 className="text-xl">Engagement</h3>
@@ -224,8 +265,8 @@ export default function Index() {
             <Calendar />
           </div>
         </div>
-      </Reveal>
-      <Reveal>
+      </Reveal> */}
+      {/* <Reveal>
         <div className="px-8 md:px-32 mt-32 md:columns-2">
           <h2 className="text-4xl font-bold">Profile reports, delivered.</h2>
           <p className="mt-8">
@@ -237,14 +278,45 @@ export default function Index() {
             className="h-60 mx-auto mt-8"
           />
         </div>
+      </Reveal> */}
+      <Reveal>
+        <div className="px-8 md:px-32 mt-32 flex flex-col items-center">
+          <h2 className="text-4xl font-bold text-center">
+            Doesn't get better than this
+          </h2>
+          <Pricing />
+        </div>
       </Reveal>
-      <div className="text-center md:px-32 mt-32 py-16">
+      <Reveal>
+        <div className="px-8 md:px-32 mt-32 md:grid md:grid-cols-2">
+          <div>
+            <h2 className="text-4xl font-bold">
+              Believe in the future of{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-br from-primary to-blue-400">
+                Bluesky
+              </span>
+              ?
+            </h2>
+            <p className="mt-8">
+              Don't stand behind the crowd. Sign-up now to start growing.
+            </p>
+            <Button size={"lg"} className="mt-8" onClick={scrollToTop}>
+              Get Started
+            </Button>
+          </div>
+          <img
+            src="Bluesky_Logo.svg"
+            alt="bluesky logo"
+            className="h-48 mx-auto -rotate-[0.25rad] mt-16 md:mt-0"
+          />
+        </div>
+      </Reveal>
+      {/* <div className="text-center md:px-32 mt-32 py-16">
         <h2 className="text-4xl italic font-bold text-primary">
           It takes 20 minutes to set up posts for the month, then I sit back and
           enjoy the engagement.
         </h2>
-        {/* <p className="mt-4">- Nobody</p> */}
-      </div>
+      </div> */}
       <Footer />
     </>
   );
