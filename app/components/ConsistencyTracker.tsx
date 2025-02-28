@@ -5,6 +5,17 @@ interface Props {
 }
 
 export default function ConsistencyTracker({ dateArray }: Props) {
+  function getElementFrequency<T>(arr: T[]): Map<T, number> {
+    const frequencyMap: Map<T, number> = new Map();
+
+    for (const element of arr) {
+      frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+    }
+
+    return frequencyMap;
+  }
+  const dateFreq = getElementFrequency(dateArray);
+
   let date = new Date();
   const today = date.getDate();
 
@@ -19,10 +30,31 @@ export default function ConsistencyTracker({ dateArray }: Props) {
     }
     if (today == day && dateArray?.includes(day)) {
       classString = "w-full h-8 border-2 border-primary bg-blue-200";
+      if (dateFreq.get(day) == 1) {
+        classString = "border w-full h-8 border-2 border-primary bg-primary/10";
+      } else if (dateFreq.get(day) == 1) {
+        classString = "border w-full h-8 border-2 border-primary bg-primary/20";
+      } else if (dateFreq.get(day) == 2) {
+        classString = "border w-full h-8 border-2 border-primary bg-primary/30";
+      } else if (dateFreq.get(day) == 3) {
+        classString = "border w-full h-8 border-2 border-primary bg-primary/40";
+      } else if (dateFreq.get(day)! >= 4) {
+        classString = "border w-full h-8 border-2 border-primary bg-primary/50";
+      }
     } else if (today == day) {
       classString = "border w-full h-8 border-2 border-primary";
     } else if (dateArray?.includes(day)) {
-      classString = "border w-full h-8 bg-blue-200";
+      if (dateFreq.get(day) == 1) {
+        classString = "border w-full h-8 bg-primary/10";
+      } else if (dateFreq.get(day) == 1) {
+        classString = "border w-full h-8 bg-primary/20";
+      } else if (dateFreq.get(day) == 2) {
+        classString = "border w-full h-8 bg-primary/30";
+      } else if (dateFreq.get(day) == 3) {
+        classString = "border w-full h-8 bg-primary/40";
+      } else if (dateFreq.get(day)! >= 4) {
+        classString = "border w-full h-8 bg-primary/50";
+      }
     } else {
       classString = "border w-full h-8";
     }

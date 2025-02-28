@@ -202,7 +202,7 @@ export default function Statistics() {
             </div>
           </div>
         </div>
-        <ContributionTracker dateArray={state?.dateArray} />
+        {state && <ContributionTracker dateArray={state?.dateArray} />}
       </div>
       <div className="h-60 md:w-1/2">
         <div className="mb-2 font-bold flex justify-between items-center mt-8">
