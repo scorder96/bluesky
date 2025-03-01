@@ -147,6 +147,19 @@ export default function Index() {
             )}
           </Button>
         </Form>
+        <a
+          href="https://www.producthunt.com/posts/bluestride?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-bluestride"
+          target="_blank"
+          className="mt-16"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=929172&theme=light&t=1740827869750"
+            alt="Bluestride - Scheduling&#0032;and&#0032;Analytics&#0032;for&#0032;Bluesky | Product Hunt"
+            style={{ width: 250, height: 54 }}
+            width="250"
+            height="54"
+          />
+        </a>
       </div>
       <Reveal>
         <div className="px-8 md:px-32 text-center">
