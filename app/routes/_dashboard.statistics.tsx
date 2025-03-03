@@ -59,52 +59,46 @@ export default function Statistics() {
 
   const [DataValue, setDataValue] = useState("Followers");
   const [Loading, setLoading] = useState(false);
-  // const data = useLoaderData<typeof loader>();
-  // const globalState = useGlobalState();
-  const date = new Date();
-  var today = date.getDate();
-  var variableToday = today;
-  var streak = 0;
-  var maxStreak = 0;
-  // const data = {
-  //   dateArray: [8, 9],
-  //   tReplies: 3,
-  //   tReposts: 2,
-  //   tQuotes: 2,
-  //   tLikes: 2,
-  //   posts: 1,
-  // };
-  function cleanArray<T>(arr: (T | null)[]): T[] {
-    return [...new Set(arr.filter((item) => item !== null))] as T[];
-  }
-  const cleanedArray: Array<number> = state ? cleanArray(state?.dateArray) : [];
 
-  var c = 0;
-  for (let i = 0; i < cleanedArray.length - 1; i++) {
-    if (cleanedArray[i] - cleanedArray[i + 1] == 1) {
-      c++;
-    } else {
-      if (c + 1 >= maxStreak) {
-        maxStreak = c + 1;
+  function calculateStreaks(postDates: number[][]): {
+    maxStreak: number;
+    currentStreak: number;
+  } {
+    // Flatten the 2D array and sort it in ascending order
+    const allDates = postDates.flat().sort((a, b) => a - b);
+
+    if (allDates.length === 0) return { maxStreak: 0, currentStreak: 0 };
+
+    let maxStreak = 1;
+    let currentStreak = 1;
+    let tempStreak = 1;
+
+    for (let i = 1; i < allDates.length; i++) {
+      if (allDates[i] === allDates[i - 1] + 1) {
+        tempStreak++; // Increase streak if consecutive day
+      } else if (allDates[i] !== allDates[i - 1]) {
+        tempStreak = 1; // Reset if non-consecutive
       }
-      c = 0;
-    }
-  }
 
-  while (today != 0) {
-    if (cleanedArray.includes(variableToday)) {
-      streak++;
-    } else {
-      if (variableToday == today) {
-        if (!cleanedArray.includes(today - 1)) {
-          break;
-        }
+      maxStreak = Math.max(maxStreak, tempStreak);
+    }
+
+    // Calculate current streak: count back from the most recent date
+    currentStreak = 1;
+    for (let i = allDates.length - 1; i > 0; i--) {
+      if (allDates[i] === allDates[i - 1] + 1) {
+        currentStreak++;
       } else {
         break;
       }
     }
-    variableToday--;
+
+    return { maxStreak, currentStreak };
   }
+
+  const { maxStreak, currentStreak } = state
+    ? calculateStreaks(state?.dateArray)
+    : { maxStreak: 0, currentStreak: 0 };
 
   const [chartData, setChartData] = useState(Array<object>);
 
@@ -126,7 +120,7 @@ export default function Statistics() {
       const recordItem = resultList.items[i];
       const recordDate = resultList.items[i].created;
       const date = new Date(recordDate);
-      const finalDate = date.getDate();
+      const finalDate = date.getUTCDate();
       var property;
       switch (value) {
         case "Followers":
@@ -213,12 +207,12 @@ export default function Statistics() {
           <div className="flex items-center">
             <Flame size={16} color="orange" className="me-1" />
             <div>
-              <span className="font-bold">{streak}&nbsp;</span>
+              <span className="font-bold">{currentStreak}&nbsp;</span>
               <span className="text-xs opacity-50">day streak</span>
             </div>
           </div>
         </div>
-        {state && <ContributionTracker dateArray={state?.dateArray} />}
+        {state && <ContributionTracker dateArray={state?.dateArray[0]} />}
         <div className="mt-4 flex items-center">
           <Flame size={16} color="orange" className="me-1" />
           <div>

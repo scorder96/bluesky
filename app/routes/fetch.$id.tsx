@@ -25,7 +25,8 @@ export async function loader({ params }: LoaderFunctionArgs) {
   var tQuotes = 0;
   var tLikes = 0;
   var posts = 0;
-  var dateArray = [];
+  var dateArray: Array<Array<number>> = [];
+  var visitedMonths: Array<number> = [];
   for (let i = 0; i < postData.feed.length; i++) {
     posts++;
     if (!postData.feed[i].reason) {
@@ -38,10 +39,16 @@ export async function loader({ params }: LoaderFunctionArgs) {
       const date = new Date(timestamp);
       const todaydate = new Date();
       if (
-        date.getFullYear() == todaydate.getFullYear() &&
-        date.getMonth() == todaydate.getMonth()
+        date.getFullYear() == todaydate.getFullYear()
+        // date.getMonth() == todaydate.getMonth()
       ) {
-        dateArray[i] = date.getDate();
+        if (!visitedMonths.includes(date.getUTCMonth())) {
+          dateArray.push([]);
+          visitedMonths.push(date.getUTCMonth());
+          dateArray[dateArray.length - 1].push(date.getUTCDate());
+        } else {
+          dateArray[dateArray.length - 1].push(date.getUTCDate());
+        }
       }
     }
   }
