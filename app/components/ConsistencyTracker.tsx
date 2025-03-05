@@ -7,9 +7,10 @@ interface Props {
 export default function ConsistencyTracker({ dateArray }: Props) {
   function getElementFrequency<T>(arr: T[]): Map<T, number> {
     const frequencyMap: Map<T, number> = new Map();
-
-    for (const element of arr) {
-      frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+    if (arr) {
+      for (const element of arr) {
+        frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+      }
     }
 
     return frequencyMap;
