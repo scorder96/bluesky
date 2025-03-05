@@ -64,41 +64,51 @@ export default function Statistics() {
     maxStreak: number;
     currentStreak: number;
   } {
-    // Flatten the 2D array and sort it in ascending order
-    const allDates = postDates.flat().sort((a, b) => a - b);
+    let maxStreak = 0;
+    let currentStreak = 0;
+    let tempStreak = 0;
+    let lastDate: number | null = null;
 
-    if (allDates.length === 0) return { maxStreak: 0, currentStreak: 0 };
+    // Flatten, remove duplicates, and sort in descending order (so today is first)
+    const allDates = [...new Set(postDates.flat())].sort((a, b) => b - a);
 
-    let maxStreak = 1;
-    let currentStreak = 1;
-    let tempStreak = 1;
+    const today = new Date().getDate();
+    let isCurrentStreakActive = false;
 
-    for (let i = 1; i < allDates.length; i++) {
-      if (allDates[i] === allDates[i - 1] + 1) {
-        tempStreak++; // Increase streak if consecutive day
-      } else if (allDates[i] !== allDates[i - 1]) {
-        tempStreak = 1; // Reset if non-consecutive
+    for (let i = 0; i < allDates.length; i++) {
+      if (lastDate !== null && allDates[i] === lastDate - 1) {
+        // Continue streak
+        tempStreak++;
+      } else if (lastDate !== null && allDates[i] !== lastDate) {
+        // Streak broken, save max streak
+        maxStreak = Math.max(maxStreak, tempStreak);
+        tempStreak = 1;
       }
 
-      maxStreak = Math.max(maxStreak, tempStreak);
+      // Check if today's date is part of the streak
+      if (allDates[i] === today) {
+        isCurrentStreakActive = true;
+      }
+
+      lastDate = allDates[i];
     }
 
-    // Calculate current streak: count back from the most recent date
-    currentStreak = 1;
-    for (let i = allDates.length - 1; i > 0; i--) {
-      if (allDates[i] === allDates[i - 1] + 1) {
-        currentStreak++;
-      } else {
-        break;
-      }
+    // Final max streak check
+    maxStreak = Math.max(maxStreak, tempStreak);
+
+    // If today is part of the streak, set current streak
+    if (isCurrentStreakActive) {
+      currentStreak = tempStreak;
     }
 
     return { maxStreak, currentStreak };
   }
 
+  const date = new Date();
   const { maxStreak, currentStreak } = state
     ? calculateStreaks(state?.dateArray)
     : { maxStreak: 0, currentStreak: 0 };
+  console.log(state?.dateArray);
 
   const [chartData, setChartData] = useState(Array<object>);
 
