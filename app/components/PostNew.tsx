@@ -27,6 +27,7 @@ export function PostNew({ onScheduled }: Props) {
   const [UploadedImage, setUploadedImage] = useState<JSON>();
   const [Loading, setLoading] = useState(false);
   const [Error, setError] = useState(String);
+  const [open, setOpen] = useState(false);
   const today = new Date();
   const navigate = useNavigate();
   // const isWhitespaceChar = (char: string) => {
@@ -89,9 +90,10 @@ export function PostNew({ onScheduled }: Props) {
       onScheduled();
     }
     setLoading(false);
+    setOpen(false);
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={"lg"}>
           <Edit /> New Post
