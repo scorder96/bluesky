@@ -63,7 +63,12 @@ export default async function jsonBuilder(
         ],
       };
       facets.push(facetJson);
-      if (webEmbed.title != "no-embed" && webEmbed.description != "no-embed") {
+      if (
+        webEmbed.title &&
+        webEmbed.description &&
+        webEmbed.title != "no-embed" &&
+        webEmbed.description != "no-embed"
+      ) {
         const embedJson = {
           $type: "app.bsky.embed.external",
           external: {
@@ -82,5 +87,7 @@ export default async function jsonBuilder(
     defaultJson.embed = imageJson;
   }
   defaultJson.facets = facets;
+  console.log(defaultJson);
+
   return defaultJson;
 }
