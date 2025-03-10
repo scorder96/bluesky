@@ -66,49 +66,47 @@ export default function Statistics() {
   } {
     let maxStreak = 0;
     let currentStreak = 0;
-    let tempStreak = 0;
-    let lastDate: number | null = null;
-
-    // Flatten, remove duplicates, and sort in descending order (so today is first)
-    const allDates = [...new Set(postDates.flat())].sort((a, b) => b - a);
 
     const today = new Date().getDate();
-    let isCurrentStreakActive = false;
+    const thismonthdates = postDates[0];
 
-    for (let i = 0; i < allDates.length; i++) {
-      if (lastDate !== null && allDates[i] === lastDate - 1) {
-        // Continue streak
-        tempStreak++;
-      } else if (lastDate !== null && allDates[i] !== lastDate) {
-        // Streak broken, save max streak
-        maxStreak = Math.max(maxStreak, tempStreak);
-        tempStreak = 1;
+    var count = 0;
+    for (let i = 0; i < thismonthdates.length; i++) {
+      // Skip duplicates
+      if (thismonthdates[i] === thismonthdates[i - 1]) continue;
+      // Check if the current element is equal
+      // to previous element + 1
+      if (thismonthdates[i] === thismonthdates[i - 1] - 1) {
+        count++;
+      } else {
+        // Reset the count
+        count = 1;
       }
-
-      // Check if today's date is part of the streak
-      if (allDates[i] === today) {
-        isCurrentStreakActive = true;
-      }
-
-      lastDate = allDates[i];
+      maxStreak = Math.max(count, maxStreak);
     }
-
-    // Final max streak check
-    maxStreak = Math.max(maxStreak, tempStreak);
-
-    // If today is part of the streak, set current streak
-    if (isCurrentStreakActive) {
-      currentStreak = tempStreak;
+    count = 0;
+    var varToday = today;
+    for (let i = 0; i < thismonthdates.length; i++) {
+      // Skip duplicates
+      if (thismonthdates[i] === thismonthdates[i - 1]) continue;
+      else if (
+        thismonthdates[i] === varToday ||
+        thismonthdates[i] === varToday - 1
+      ) {
+        count++;
+      } else {
+        break;
+      }
+      varToday--;
+      currentStreak = count;
     }
 
     return { maxStreak, currentStreak };
   }
 
-  const date = new Date();
   const { maxStreak, currentStreak } = state
     ? calculateStreaks(state?.dateArray)
     : { maxStreak: 0, currentStreak: 0 };
-  console.log(state?.dateArray);
 
   const [chartData, setChartData] = useState(Array<object>);
 
