@@ -60,7 +60,7 @@ export function PostNew({ onScheduled }: Props) {
     if (records.length >= 3) {
       const record = await pb.collection("payments").getFullList();
       if (record.length == 0) {
-        navigate("/pricing");
+        navigate("/pricing/free");
         return;
       }
     }

@@ -53,7 +53,7 @@ export default function Pricing() {
         ) : (
           <>
             Get Bluestride{" "}
-            <img src="antennae.svg" alt="bluestride logo" className="h-3" />
+            <img src="/antennae.svg" alt="bluestride logo" className="h-3" />
           </>
         )}
       </Button>
