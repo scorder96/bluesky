@@ -59,7 +59,8 @@ export default function Statistics() {
 
   const [DataValue, setDataValue] = useState("Followers");
   const [Loading, setLoading] = useState(false);
-
+  const today = new Date();
+  const thisMonth = state?.visitedMonths.includes(today.getMonth());
   function calculateStreaks(postDates: number[][]): {
     maxStreak: number;
     currentStreak: number;
@@ -220,7 +221,11 @@ export default function Statistics() {
             </div>
           </div>
         </div>
-        {state && <ContributionTracker dateArray={state?.dateArray[0]} />}
+        {state && (
+          <ContributionTracker
+            dateArray={thisMonth ? state?.dateArray[0] : []}
+          />
+        )}
         <div className="mt-4 flex items-center">
           <Flame size={16} color="orange" className="me-1" />
           <div>

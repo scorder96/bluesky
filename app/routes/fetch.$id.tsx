@@ -61,6 +61,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     tReposts,
     tQuotes,
     tLikes,
+    visitedMonths,
     dateArray,
   };
 }
