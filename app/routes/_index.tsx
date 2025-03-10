@@ -135,9 +135,10 @@ export default function Index() {
               name="identifier"
             />
           </div>
-          {data == false && (
-            <p className="mt-4 text-red-500">Handle not found :(</p>
-          )}
+          {data == false &&
+            !(
+              navigation.state == "submitting" || navigation.state == "loading"
+            ) && <p className="mt-4 text-red-500">Handle not found :(</p>}
           <Button className="mt-4">
             {navigation.state == "submitting" ||
             navigation.state == "loading" ? (
