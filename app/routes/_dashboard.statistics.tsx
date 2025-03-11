@@ -69,8 +69,7 @@ export default function Statistics() {
     let currentStreak = 0;
 
     const today = new Date().getDate();
-    const thismonthdates = postDates[0];
-
+    const thismonthdates = postDates[0] || [];
     var count = 0;
     for (let i = 0; i < thismonthdates.length; i++) {
       // Skip duplicates
