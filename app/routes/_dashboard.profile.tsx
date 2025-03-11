@@ -1,6 +1,6 @@
 import { useNavigate, useRouteError } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import Combobox from "~/components/Combobox";
+import AllProfiles from "~/components/AllProfiles";
 import Pro from "~/components/Pro";
 import {
   Card,
@@ -112,14 +112,15 @@ export default function Profile() {
           {state?.profileData.description}
         </CardFooter>
       </Card>
-      <Combobox
+      {/* <Combobox
         list={["+ Add profile"]}
         placeholder="switch profile"
         // onSelected={() => setProDialog(true)}
         onSelected={() => {
           navigate("/pricing");
         }}
-      />
+      /> */}
+      <AllProfiles />
       {ProDialog && <Pro />}
     </div>
   );
