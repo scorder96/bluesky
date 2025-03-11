@@ -19,10 +19,10 @@ export function ErrorBoundary() {
   const error = useRouteError();
   return (
     <div className="col-span-5 flex flex-col justify-center items-center">
-      <h2>Cannot fetch data | Rate limit exceeded</h2>
-      <p className="text-sm mt-4">
-        Please come back in an hour, or connect to a different network and
-        refresh.
+      <h2>There was an unexpected error</h2>
+      <p className="text-sm mt-4">Please refresh or try fetching again.</p>
+      <p className="text-sm">
+        Support email -<u>scorder96@gmail.com</u>
       </p>
     </div>
   );
